@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6/49 Lottery - 4-Combo Strategy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 20px;
+        }
+        
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        input[type="date"],
+        input[type="number"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        textarea {
+            font-family: monospace;
+            min-height: 100px;
+        }
+        
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+        }
+        
+        .btn-info {
+            background: #3b82f6;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .btn-info:hover {
+            background: #2563eb;
+        }
+        
+        .btn-warning {
+            background: #8b5cf6;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #7c3aed;
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .param-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .param-group {
+            margin-bottom: 15px;
+        }
+        
+        .param-group label {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-card.blue {
+            background: #dbeafe;
+        }
+        
+        .stat-card.green {
+            background: #d1fae5;
+        }
+        
+        .stat-card.purple {
+            background: #e9d5ff;
+        }
+        
+        .stat-card.orange {
+            background: #fed7aa;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .results-area {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .combo-item {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .combo-numbers {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .number-ball {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .combo-meta {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .draw-item {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .draw-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .draw-date {
+            font-size: 13px;
+            color: #666;
+            min-width: 100px;
+        }
+        
+        .draw-numbers {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .draw-ball {
+            width: 32px;
+            height: 32px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .draw-ball.bonus {
+            background: #dc2626;
+        }
+        
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+        
+        .info-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .info-box h3 {
+            color: #92400e;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .info-box p {
+            color: #78350f;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎰 6/49 Lottery - 4-Number Combination Strategy</h1>
+            <p>Generate tickets based on undrawn 4-number combinations for better winning chances</p>
+        </div>
+        
+        <div class="main-grid">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Strategy Info -->
+                <div class="card">
+                    <div class="info-box">
+                        <h3>Strategy Explained</h3>
+                        <p>We track all 4-number combinations from historical draws. Generating tickets with undrawn 4-number combos maximizes your chance of hitting 4+ matching numbers.</p>
+                    </div>
+                </div>
+                
+                <!-- Bulk Import -->
+                <div class="card">
+                    <h2>📥 Bulk Import Draws</h2>
+                    <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                        Paste draws (one per line):<br>
+                        Format: YYMMDD: n1, n2, n3, n4, n5, n6 / bonus
+                    </p>
+                    <textarea id="bulkImport" placeholder="251025:  6,  8, 19, 39, 43, 49 / 46&#10;251022:  2,  4,  7, 41, 45, 46 / 13"></textarea>
+                    <button class="btn-primary" onclick="importBulk()">Import Draws</button>
+                </div>
+                
+                <!-- Add Single Draw -->
+                <div class="card">
+                    <h2>📅 Add Single Draw</h2>
+                    <input type="date" id="drawDate" placeholder="Date">
+                    <div class="number-grid">
+                        <input type="number" id="n1" min="1" max="49" placeholder="N1">
+                        <input type="number" id="n2" min="1" max="49" placeholder="N2">
+                        <input type="number" id="n3" min="1" max="49" placeholder="N3">
+                        <input type="number" id="n4" min="1" max="49" placeholder="N4">
+                        <input type="number" id="n5" min="1" max="49" placeholder="N5">
+                        <input type="number" id="n6" min="1" max="49" placeholder="N6">
+                    </div>
+                    <input type="number" id="bonus" min="1" max="49" placeholder="Bonus">
+                    <button class="btn-primary" onclick="addDraw()">➕ Add Draw</button>
+                </div>
+                
+                <!-- Generation Parameters -->
+                <div class="card">
+                    <h2>⚙️ Generation Parameters</h2>
+                    <div class="param-group">
+                        <label>Number of tickets to generate</label>
+                        <input type="number" id="numTickets" min="1" max="1000" value="50">
+                    </div>
+                    <div class="param-row">
+                        <div class="param-group">
+                            <label>Holes Min</label>
+                            <input type="number" id="holeMin" min="0" max="5" value="1">
+                        </div>
+                        <div class="param-group">
+                            <label>Holes Max</label>
+                            <input type="number" id="holeMax" min="0" max="5" value="2">
+                        </div>
+                    </div>
+                    <div class="param-row">
+                        <div class="param-group">
+                            <label>Odd Min</label>
+                            <input type="number" id="oddMin" min="0" max="6" value="2">
+                        </div>
+                        <div class="param-group">
+                            <label>Odd Max</label>
+                            <input type="number" id="oddMax" min="0" max="6" value="4">
+                        </div>
+                    </div>
+                    <button class="btn-success" onclick="generateTickets()" id="generateBtn">🎲 Generate Tickets</button>
+                </div>
+                
+                <!-- Trim Generated Tickets -->
+                <div class="card">
+                    <h2>✂️ Trim Tickets</h2>
+                    <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                        Remove tickets containing specific numbers
+                    </p>
+                    <input type="number" id="trimNumber" min="1" max="49" placeholder="Number to trim (1-49)">
+                    <button class="btn-warning" onclick="trimTickets()">Remove Tickets</button>
+                    <div id="trimStats" style="font-size: 12px; color: #666; margin-top: 10px;"></div>
+                </div>
+                
+                <!-- Data Management -->
+                <div class="card">
+                    <h2>💾 Data Management</h2>
+                    <button class="btn-info" onclick="exportData()">⬇️ Export Data</button>
+                    <input type="file" id="importFile" accept=".json" onchange="importData()" style="display: none;">
+                    <button class="btn-warning" onclick="document.getElementById('importFile').click()">⬆️ Import Data</button>
+                </div>
+            </div>
+            
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- 4-Combo Statistics -->
+                <div class="card" id="statsCard">
+                    <h2>📊 4-Number Combination Analysis</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card blue">
+                            <div class="stat-label">Total Draws</div>
+                            <div class="stat-value" id="totalDraws">0</div>
+                        </div>
+                        <div class="stat-card green">
+                            <div class="stat-label">Total 4-Combos</div>
+                            <div class="stat-value">211,876</div>
+                        </div>
+                        <div class="stat-card purple">
+                            <div class="stat-label">Drawn 4-Combos</div>
+                            <div class="stat-value" id="drawnCombos">0</div>
+                        </div>
+                        <div class="stat-card orange">
+                            <div class="stat-label">Remaining</div>
+                            <div class="stat-value" id="remainingCombos">211,876</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar" style="width: 0%">0%</div>
+                    </div>
+                    
+                    <p style="font-size: 13px; color: #666; margin-top: 10px;">
+                        Coverage: <span id="coveragePercent">0.00</span>% of all 4-number combinations have been drawn
+                    </p>
+                </div>
+                
+                <!-- Generated Tickets -->
+                <div class="card" id="generatedCard" style="display: none;">
+                    <h2>✨ Generated Tickets (<span id="genCount">0</span>)</h2>
+                    <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                        Each ticket contains multiple undrawn 4-number combinations
+                    </p>
+                    <div class="results-area" id="generatedResults"></div>
+                </div>
+                
+                <!-- Historical Draws -->
+                <div class="card" id="drawsCard" style="display: none;">
+                    <h2>📜 Historical Draws (<span id="drawCount">0</span>)</h2>
+                    <div class="results-area" id="drawsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const MAX = 49;
+        const MAX_PLAY = 6;
+        const TOTAL_4_COMBOS = 211876; // C(49,4)
+        
+        let draws = [];
+        let generated = [];
+        let drawn4Combos = new Set();
+        
+        // Calculate all 4-number combinations in a 6-number ticket
+        function get4Combos(numbers) {
+            const combos = [];
+            for (let i = 0; i < numbers.length - 3; i++) {
+                for (let j = i + 1; j < numbers.length - 2; j++) {
+                    for (let k = j + 1; k < numbers.length - 1; k++) {
+                        for (let l = k + 1; l < numbers.length; l++) {
+                            combos.push([numbers[i], numbers[j], numbers[k], numbers[l]].join('-'));
+                        }
+                    }
+                }
+            }
+            return combos;
+        }
+        
+        // Count undrawn 4-combos in a ticket
+        function countUndrawn4Combos(numbers) {
+            const combos = get4Combos(numbers);
+            let undrawn = 0;
+            combos.forEach(combo => {
+                if (!drawn4Combos.has(combo)) undrawn++;
+            });
+            return { total: combos.length, undrawn: undrawn };
+        }
+        
+        // Update 4-combo tracking
+        function update4ComboTracking() {
+            drawn4Combos.clear();
+            
+            draws.forEach(draw => {
+                const combos = get4Combos(draw.numbers);
+                combos.forEach(combo => drawn4Combos.add(combo));
+            });
+            
+            updateStats();
+        }
+        
+        // Calculate holes
+        function calculateHoles(numbers) {
+            const sorted = [...numbers].sort((a, b) => a - b);
+            let holes = 0;
+            for (let i = 1; i < sorted.length; i++) {
+                if (sorted[i] - sorted[i-1] > 2) holes++;
+            }
+            return holes;
+        }
+        
+        // Calculate odd count
+        function calculateOdd(numbers) {
+            return numbers.filter(n => n % 2 === 1).length;
+        }
+        
+        // Import bulk draws
+        function importBulk() {
+            const text = document.getElementById('bulkImport').value;
+            const lines = text.split('\n');
+            let imported = 0;
+            
+            lines.forEach(line => {
+                line = line.trim();
+                if (!line || line.startsWith('#')) return;
+                
+                // Parse format: YYMMDD:  n1, n2, n3, n4, n5, n6 / bonus
+                if (line.includes(':')) {
+                    const parts = line.split(':');
+                    const date = '20' + parts[0].trim();
+                    const numsPart = parts[1].split('/')[0].trim();
+                    const bonusPart = parts[1].split('/')[1];
+                    
+                    const numbers = [];
+                    numsPart.split(',').forEach(n => {
+                        const num = parseInt(n.trim());
+                        if (num >= 1 && num <= MAX) numbers.push(num);
+                    });
+                    
+                    const bonus = bonusPart ? parseInt(bonusPart.trim()) : 0;
+                    
+                    if (numbers.length === MAX_PLAY && bonus >= 1 && bonus <= MAX) {
+                        const draw = {
+                            date: date,
+                            numbers: numbers,
+                            bonus: bonus,
+                            holes: calculateHoles(numbers),
+                            odd: calculateOdd(numbers)
+                        };
+                        draws.push(draw);
+                        imported++;
+                    }
+                }
+            });
+            
+            draws.sort((a, b) => new Date(a.date) - new Date(b.date));
+            update4ComboTracking();
+            updateUI();
+            
+            document.getElementById('bulkImport').value = '';
+            alert(`✅ Imported ${imported} draws successfully!`);
+        }
+        
+        // Add single draw
+        function addDraw() {
+            const date = document.getElementById('drawDate').value;
+            const nums = [
+                parseInt(document.getElementById('n1').value),
+                parseInt(document.getElementById('n2').value),
+                parseInt(document.getElementById('n3').value),
+                parseInt(document.getElementById('n4').value),
+                parseInt(document.getElementById('n5').value),
+                parseInt(document.getElementById('n6').value)
+            ];
+            const bonus = parseInt(document.getElementById('bonus').value);
+            
+            if (!date) {
+                alert('Please enter a date');
+                return;
+            }
+            
+            if (nums.some(n => isNaN(n) || n < 1 || n > MAX)) {
+                alert('All numbers must be between 1 and 49');
+                return;
+            }
+            
+            if (isNaN(bonus) || bonus < 1 || bonus > MAX) {
+                alert('Bonus must be between 1 and 49');
+                return;
+            }
+            
+            if (new Set(nums).size !== MAX_PLAY) {
+                alert('Numbers must be unique');
+                return;
+            }
+            
+            const draw = {
+                date: date,
+                numbers: nums,
+                bonus: bonus,
+                holes: calculateHoles(nums),
+                odd: calculateOdd(nums)
+            };
+            
+            draws.push(draw);
+            draws.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // Clear inputs
+            document.getElementById('drawDate').value = '';
+            document.getElementById('n1').value = '';
+            document.getElementById('n2').value = '';
+            document.getElementById('n3').value = '';
+            document.getElementById('n4').value = '';
+            document.getElementById('n5').value = '';
+            document.getElementById('n6').value = '';
+            document.getElementById('bonus').value = '';
+            
+            update4ComboTracking();
+            updateUI();
+            alert('Draw added successfully');
+        }
+        
+        // Delete draw
+        function deleteDraw(index) {
+            draws.splice(index, 1);
+            update4ComboTracking();
+            updateUI();
+        }
+        
+        // Generate tickets based on undrawn 4-combos
+        function generateTickets() {
+            if (draws.length < 10) {
+                alert('Need at least 10 draws for meaningful generation');
+                return;
+            }
+            
+            const numTickets = parseInt(document.getElementById('numTickets').value);
+            const holeMin = parseInt(document.getElementById('holeMin').value);
+            const holeMax = parseInt(document.getElementById('holeMax').value);
+            const oddMin = parseInt(document.getElementById('oddMin').value);
+            const oddMax = parseInt(document.getElementById('oddMax').value);
+            
+            const results = [];
+            const maxAttempts = numTickets * 1000;
+            let attempts = 0;
+            
+            while (results.length < numTickets && attempts < maxAttempts) {
+                attempts++;
+                
+                // Generate random combination
+                const combo = [];
+                while (combo.length < MAX_PLAY) {
+                    const num = Math.floor(Math.random() * MAX) + 1;
+                    if (!combo.includes(num)) combo.push(num);
+                }
+                combo.sort((a, b) => a - b);
+                
+                // Check constraints
+                const holes = calculateHoles(combo);
+                const odd = calculateOdd(combo);
+                
+                if (holes < holeMin || holes > holeMax) continue;
+                if (odd < oddMin || odd > oddMax) continue;
+                
+                // Check for duplicates
+                if (results.some(r => r.numbers.join(',') === combo.join(','))) continue;
+                
+                // Count undrawn 4-combos
+                const comboInfo = countUndrawn4Combos(combo);
+                
+                results.push({
+                    numbers: combo,
+                    holes: holes,
+                    odd: odd,
+                    undrawn4: comboInfo.undrawn,
+                    total4: comboInfo.total
+                });
+            }
+            
+            // Sort by most undrawn 4-combos
+            results.sort((a, b) => b.undrawn4 - a.undrawn4);
+            
+            generated = results;
+            updateUI();
+            alert(`✅ Generated ${results.length} tickets`);
+        }
+        
+        // Trim tickets containing a specific number
+        function trimTickets() {
+            const trimNum = parseInt(document.getElementById('trimNumber').value);
+            
+            if (isNaN(trimNum) || trimNum < 1 || trimNum > MAX) {
+                alert('Please enter a valid number between 1 and 49');
+                return;
+            }
+            
+            if (generated.length === 0) {
+                alert('No tickets to trim. Generate tickets first.');
+                return;
+            }
+            
+            const before = generated.length;
+            generated = generated.filter(ticket => !ticket.numbers.includes(trimNum));
+            const after = generated.length;
+            const removed = before - after;
+            
+            document.getElementById('trimNumber').value = '';
+            document.getElementById('trimStats').innerHTML = 
+                `Removed: <strong>${removed}</strong> tickets | Remaining: <strong>${after}</strong> tickets`;
+            
+            updateUI();
+            
+            if (removed > 0) {
+                alert(`✅ Removed ${removed} tickets containing number ${trimNum}`);
+            } else {
+                alert(`No tickets contained number ${trimNum}`);
+            }
+        }
+        
+        // Export data
+        function exportData() {
+            const data = JSON.stringify({ draws, generated }, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'lottery-data.json';
+            a.click();
+        }
+        
+        // Import data
+        function importData() {
+            const file = document.getElementById('importFile').files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Validate and import draws
+                    if (data.draws && Array.isArray(data.draws)) {
+                        draws = data.draws.filter(draw => {
+                            return draw.numbers && 
+                                   Array.isArray(draw.numbers) && 
+                                   draw.numbers.length === MAX_PLAY &&
+                                   draw.date &&
+                                   typeof draw.bonus === 'number';
+                        });
+                    }
+                    
+                    // Validate and import generated tickets
+                    if (data.generated && Array.isArray(data.generated)) {
+                        generated = data.generated.filter(ticket => {
+                            return ticket.numbers && 
+                                   Array.isArray(ticket.numbers) && 
+                                   ticket.numbers.length === MAX_PLAY;
+                        });
+                    }
+                    
+                    update4ComboTracking();
+                    updateUI();
+                    alert(`✅ Data imported successfully!\nDraws: ${draws.length}\nTickets: ${generated.length}`);
+                } catch (err) {
+                    alert('Invalid file format. Please upload a valid JSON file exported from this app.\n\nError: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset file input
+            document.getElementById('importFile').value = '';
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const drawnCount = drawn4Combos.size;
+            const remaining = TOTAL_4_COMBOS - drawnCount;
+            const percentage = (drawnCount / TOTAL_4_COMBOS * 100).toFixed(2);
+            
+            const totalDrawsEl = document.getElementById('totalDraws');
+            const drawnCombosEl = document.getElementById('drawnCombos');
+            const remainingCombosEl = document.getElementById('remainingCombos');
+            const coveragePercentEl = document.getElementById('coveragePercent');
+            const progressBarEl = document.getElementById('progressBar');
+            
+            if (totalDrawsEl) totalDrawsEl.textContent = draws.length;
+            if (drawnCombosEl) drawnCombosEl.textContent = drawnCount.toLocaleString();
+            if (remainingCombosEl) remainingCombosEl.textContent = remaining.toLocaleString();
+            if (coveragePercentEl) coveragePercentEl.textContent = percentage;
+            if (progressBarEl) {
+                progressBarEl.style.width = percentage + '%';
+                progressBarEl.textContent = percentage + '%';
+            }
+        }
+        
+        // Update UI
+        function updateUI() {
+            updateStats();
+            
+            const genCountEl = document.getElementById('genCount');
+            if (genCountEl) genCountEl.textContent = generated.length;
+            
+            const drawCountEl = document.getElementById('drawCount');
+            if (drawCountEl) drawCountEl.textContent = draws.length;
+            
+            // Update generated tickets
+            if (generated.length > 0) {
+                document.getElementById('generatedCard').style.display = 'block';
+                document.getElementById('genCount').textContent = generated.length;
+                
+                const genHtml = generated.map((ticket, i) => `
+                    <div class="combo-item">
+                        <div class="combo-numbers">
+                            ${ticket.numbers.map(n => `<div class="number-ball">${n}</div>`).join('')}
+                        </div>
+                        <div class="combo-meta">
+                            <strong>Undrawn 4-combos: ${ticket.undrawn4}/${ticket.total4}</strong> | 
+                            Holes: ${ticket.holes} | Odd: ${ticket.odd}
+                        </div>
+                    </div>
+                `).join('');
+                document.getElementById('generatedResults').innerHTML = genHtml;
+            } else {
+                document.getElementById('generatedCard').style.display = 'none';
+            }
+            
+            // Update draws list
+            if (draws.length > 0) {
+                document.getElementById('drawsCard').style.display = 'block';
+                document.getElementById('drawCount').textContent = draws.length;
+                
+                const drawsHtml = [...draws].reverse().map((draw, i) => {
+                    const actualIndex = draws.length - 1 - i;
+                    return `
+                        <div class="draw-item">
+                            <div class="draw-content">
+                                <div class="draw-date">${draw.date}</div>
+                                <div class="draw-numbers">
+                                    ${draw.numbers.map(n => `<div class="draw-ball">${n}</div>`).join('')}
+                                    <div class="draw-ball bonus">${draw.bonus}</div>
+                                </div>
+                            </div>
+                            <button class="btn-delete" onclick="deleteDraw(${actualIndex})">🗑️</button>
+                        </div>
+                    `;
+                }).join('');
+                document.getElementById('drawsList').innerHTML = drawsHtml;
+            } else {
+                document.getElementById('drawsCard').style.display = 'none';
+            }
+            
+            document.getElementById('generateBtn').disabled = draws.length < 10;
+        }
+        
+        // Initialize
+        updateUI();
+    </script>
+</body>
+</html>

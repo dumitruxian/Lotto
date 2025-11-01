@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6/49 Lottery Command Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 20px;
+        }
+        
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .card h3 {
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        
+        input[type="date"],
+        input[type="number"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        textarea {
+            font-family: monospace;
+            min-height: 100px;
+        }
+        
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+        }
+        
+        .btn-info {
+            background: #3b82f6;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .btn-info:hover {
+            background: #2563eb;
+        }
+        
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #d97706;
+        }
+        
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .param-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .param-group {
+            margin-bottom: 15px;
+        }
+        
+        .param-group label {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-card.blue {
+            background: #dbeafe;
+        }
+        
+        .stat-card.green {
+            background: #d1fae5;
+        }
+        
+        .stat-card.purple {
+            background: #e9d5ff;
+        }
+        
+        .stat-card.orange {
+            background: #fed7aa;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .results-area {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .combo-item {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .combo-numbers {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .number-ball {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .combo-meta {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .draw-item {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .draw-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .draw-date {
+            font-size: 13px;
+            color: #666;
+            min-width: 100px;
+        }
+        
+        .draw-numbers {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .draw-ball {
+            width: 32px;
+            height: 32px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .draw-ball.bonus {
+            background: #dc2626;
+        }
+        
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+        
+        .info-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .info-box h3 {
+            color: #92400e;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .info-box p {
+            color: #78350f;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .info-box.blue {
+            background: #dbeafe;
+            border-left-color: #3b82f6;
+        }
+        
+        .info-box.blue h3 {
+            color: #1e3a8a;
+        }
+        
+        .info-box.blue p {
+            color: #1e40af;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .tool-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .tool-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .tool-card p {
+            color: #555;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .tool-card code {
+            background: #1f2937;
+            color: #10b981;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        
+        .command-box {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 13px;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎰 6/49 Lottery Command Center</h1>
+            <p>Complete toolkit for lottery analysis, generation, and file management</p>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('analyzer')">📊 Analyzer</div>
+            <div class="tab" onclick="switchTab('tools')">🛠️ Tools & Scripts</div>
+            <div class="tab" onclick="switchTab('workflow')">📋 Workflow Guide</div>
+        </div>
+        
+        <!-- ANALYZER TAB -->
+        <div id="analyzer" class="tab-content active">
+            <div class="main-grid">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <!-- Strategy Info -->
+                    <div class="card">
+                        <div class="info-box">
+                            <h3>4-Combo Strategy</h3>
+                            <p>Track 4-number combinations from draws. Generate tickets with undrawn 4-combos for better winning chances.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Bulk Import -->
+                    <div class="card">
+                        <h2>📥 Bulk Import Draws</h2>
+                        <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                            Format: YYMMDD: n1, n2, n3, n4, n5, n6 / bonus
+                        </p>
+                        <textarea id="bulkImport" placeholder="251025:  6,  8, 19, 39, 43, 49 / 46&#10;251022:  2,  4,  7, 41, 45, 46 / 13"></textarea>
+                        <button class="btn-primary" onclick="importBulk()">Import Draws</button>
+                    </div>
+                    
+                    <!-- Add Single Draw -->
+                    <div class="card">
+                        <h2>📅 Add Single Draw</h2>
+                        <input type="date" id="drawDate">
+                        <div class="number-grid">
+                            <input type="number" id="n1" min="1" max="49" placeholder="N1">
+                            <input type="number" id="n2" min="1" max="49" placeholder="N2">
+                            <input type="number" id="n3" min="1" max="49" placeholder="N3">
+                            <input type="number" id="n4" min="1" max="49" placeholder="N4">
+                            <input type="number" id="n5" min="1" max="49" placeholder="N5">
+                            <input type="number" id="n6" min="1" max="49" placeholder="N6">
+                        </div>
+                        <input type="number" id="bonus" min="1" max="49" placeholder="Bonus">
+                        <button class="btn-primary" onclick="addDraw()">➕ Add Draw</button>
+                    </div>
+                    
+                    <!-- Generation Parameters -->
+                    <div class="card">
+                        <h2>⚙️ Generation</h2>
+                        <div class="param-group">
+                            <label>Tickets to generate</label>
+                            <input type="number" id="numTickets" min="1" max="1000" value="50">
+                        </div>
+                        <div class="param-row">
+                            <div class="param-group">
+                                <label>Holes Min</label>
+                                <input type="number" id="holeMin" min="0" max="5" value="1">
+                            </div>
+                            <div class="param-group">
+                                <label>Holes Max</label>
+                                <input type="number" id="holeMax" min="0" max="5" value="2">
+                            </div>
+                        </div>
+                        <div class="param-row">
+                            <div class="param-group">
+                                <label>Odd Min</label>
+                                <input type="number" id="oddMin" min="0" max="6" value="2">
+                            </div>
+                            <div class="param-group">
+                                <label>Odd Max</label>
+                                <input type="number" id="oddMax" min="0" max="6" value="4">
+                            </div>
+                        </div>
+                        <button class="btn-success" onclick="generateTickets()" id="generateBtn">🎲 Generate</button>
+                    </div>
+                    
+                    <!-- Trim -->
+                    <div class="card">
+                        <h2>✂️ Trim Tickets</h2>
+                        <input type="number" id="trimNumber" min="1" max="49" placeholder="Number to remove">
+                        <button class="btn-warning" onclick="trimTickets()">Remove</button>
+                        <div id="trimStats" style="font-size: 12px; color: #666; margin-top: 10px;"></div>
+                    </div>
+                    
+                    <!-- Data Management -->
+                    <div class="card">
+                        <h2>💾 Data</h2>
+                        <button class="btn-info" onclick="exportData()">⬇️ Export</button>
+                        <input type="file" id="importFile" accept=".json" onchange="importData()" style="display: none;">
+                        <button class="btn-warning" onclick="document.getElementById('importFile').click()">⬆️ Import</button>
+                    </div>
+                </div>
+                
+                <!-- Right Column -->
+                <div class="right-column">
+                    <!-- Statistics -->
+                    <div class="card" id="statsCard">
+                        <h2>📊 4-Combo Analysis</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card blue">
+                                <div class="stat-label">Total Draws</div>
+                                <div class="stat-value" id="totalDraws">0</div>
+                            </div>
+                            <div class="stat-card green">
+                                <div class="stat-label">Total 4-Combos</div>
+                                <div class="stat-value">211,876</div>
+                            </div>
+                            <div class="stat-card purple">
+                                <div class="stat-label">Drawn 4-Combos</div>
+                                <div class="stat-value" id="drawnCombos">0</div>
+                            </div>
+                            <div class="stat-card orange">
+                                <div class="stat-label">Remaining</div>
+                                <div class="stat-value" id="remainingCombos">211,876</div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressBar" style="width: 0%">0%</div>
+                        </div>
+                        
+                        <p style="font-size: 13px; color: #666; margin-top: 10px;">
+                            Coverage: <span id="coveragePercent">0.00</span>% drawn
+                        </p>
+                    </div>
+                    
+                    <!-- Generated Tickets -->
+                    <div class="card" id="generatedCard" style="display: none;">
+                        <h2>✨ Generated Tickets (<span id="genCount">0</span>)</h2>
+                        <div class="results-area" id="generatedResults"></div>
+                    </div>
+                    
+                    <!-- Historical Draws -->
+                    <div class="card" id="drawsCard" style="display: none;">
+                        <h2>📜 Historical Draws (<span id="drawCount">0</span>)</h2>
+                        <div class="results-area" id="drawsList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TOOLS TAB -->
+        <div id="tools" class="tab-content">
+            <div class="card">
+                <h2>🛠️ Python Tools & Scripts</h2>
+                <p style="color: #666; margin-bottom: 20px;">All scripts work together to manage your lottery data and analysis</p>
+                
+                <!-- File Manager -->
+                <div class="tool-card">
+                    <h3>📁 lottery_file_manager.py</h3>
+                    <p><strong>Purpose:</strong> Watches Downloads folder and automatically manages your lottery files</p>
+                    <p><strong>Features:</strong></p>
+                    <ul style="margin-left: 20px; margin-bottom: 10px;">
+                        <li>Auto-moves lottery-data.json from Downloads</li>
+                        <li>Rotates files: new → old (keeps backup)</li>
+                        <li>Updates a_649.txt automatically</li>
+                        <li>Synchronizes all files</li>
+                    </ul>
+                    <div class="command-box">python lottery_file_manager.py C:\LotteryFolder</div>
+                </div>
+                
+                <!-- Format Converter -->
+                <div class="tool-card">
+                    <h3>🔄 lottery_format_converter.py</h3>
+                    <p><strong>Purpose:</strong> Converts draw formats from various sources</p>
+                    <p><strong>Converts:</strong> "25th October 2025 [TAB] 6 [TAB] 8..." → "251025: 6, 8, 19, 39, 43, 49 / 46"</p>
+                    <div class="command-box">python lottery_format_converter.py</div>
+                </div>
+                
+                <!-- TXT to JSON -->
+                <div class="tool-card">
+                    <h3>📝 txt_to_json_converter.py</h3>
+                    <p><strong>Purpose:</strong> Converts a_649.txt to JSON for HTML app import</p>
+                    <p><strong>Output:</strong> lottery-data.json ready for web app</p>
+                    <div class="command-box">python txt_to_json_converter.py a_649.txt lottery-data.json</div>
+                </div>
+                
+                <!-- Binary Converter -->
+                <div class="tool-card">
+                    <h3>💾 binary_to_text_converter.py</h3>
+                    <p><strong>Purpose:</strong> Reads legacy binary lottery files</p>
+                    <p><strong>Note:</strong> For old 32-year-old format (optional)</p>
+                    <div class="command-box">python binary_to_text_converter.py b_649.b 6 output.txt</div>
+                </div>
+                
+                <!-- Trim Tool -->
+                <div class="tool-card">
+                    <h3>✂️ lottery_trim_tool.py</h3>
+                    <p><strong>Purpose:</strong> Remove tickets containing specific numbers</p>
+                    <p><strong>Interactive:</strong> Trim multiple numbers sequentially</p>
+                    <div class="command-box">python lottery_trim_tool.py 0 6</div>
+                </div>
+                
+                <!-- Generate All -->
+                <div class="tool-card">
+                    <h3>🎲 generate_all_649_combos.py</h3>
+                    <p><strong>Purpose:</strong> Generate all 13,983,816 possible 6/49 combinations</p>
+                    <p><strong>Output:</strong> 649ALL.txt (large file ~350MB)</p>
+                    <div class="command-box">python generate_all_649_combos.py</div>
+                </div>
+                
+                <!-- Distance Eliminator -->
+                <div class="tool-card">
+                    <h3>🎯 distance_eliminator_649.py</h3>
+                    <p><strong>Purpose:</strong> Eliminate combos by distance from all possible combinations</p>
+                    <p><strong>Strategy:</strong> Remove combos sharing 2 or 3 numbers with draws</p>
+                    <div class="command-box">python distance_eliminator_649.py 649ALL.txt a_649.txt 4</div>
+                </div>
+                
+                <!-- Verification Tool -->
+                <div class="tool-card">
+                    <h3>✅ verify_4combo_strategy.py</h3>
+                    <p><strong>Purpose:</strong> Verify 4-combo tracking accuracy</p>
+                    <p><strong>Output:</strong> Should show 56,177 drawn, 155,699 remaining (with 4457 draws)</p>
+                    <div class="command-box">python verify_4combo_strategy.py a_649.txt</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- WORKFLOW TAB -->
+        <div id="workflow" class="tab-content">
+            <div class="card">
+                <h2>📋 Complete Workflow Guide</h2>
+                
+                <div class="info-box blue">
+                    <h3>🚀 Initial Setup (One Time)</h3>
+                    <p><strong>1.</strong> Create folder: <code>C:\LotteryAnalyzer</code></p>
+                    <p><strong>2.</strong> Place all files in this folder:</p>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>LotteryCommandCenter.html (this file)</li>
+                        <li>a_649.txt (historical draws)</li>
+                        <li>All Python scripts (.py files)</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>3.</strong> Convert your draws to JSON:</p>
+                    <div class="command-box" style="margin-top: 5px;">python txt_to_json_converter.py a_649.txt lottery-data.json</div>
+                    <p style="margin-top: 10px;"><strong>4.</strong> Start file manager (keep running):</p>
+                    <div class="command-box" style="margin-top: 5px;">python lottery_file_manager.py C:\LotteryAnalyzer</div>
+                </div>
+                
+                <div class="info-box">
+                    <h3>📅 Daily Workflow</h3>
+                    <p><strong>Step 1:</strong> Open LotteryCommandCenter.html in browser</p>
+                    <p><strong>Step 2:</strong> Go to Analyzer tab → Import lottery-data.json</p>
+                    <p><strong>Step 3:</strong> Add new draw(s) as they come out</p>
+                    <p><strong>Step 4:</strong> Review 4-combo statistics</p>
+                    <p><strong>Step 5:</strong> Generate tickets (sorted by undrawn 4-combos)</p>
+                    <p><strong>Step 6:</strong> Optionally trim unwanted numbers</p>
+                    <p><strong>Step 7:</strong> Export data (auto-syncs to files via file manager)</p>
+                </div>
+                
+                <div class="info-box blue">
+                    <h3>🔄 File Synchronization</h3>
+                    <p>With <code>lottery_file_manager.py</code> running:</p>
+                    <p><strong>1.</strong> Export from web app → Downloads/lottery-data.json</p>
+                    <p><strong>2.</strong> File manager detects and moves it → lottery-data-new.json</p>
+                    <p><strong>3.</strong> Old file rotated → lottery-data-old.json (backup)</p>
+                    <p><strong>4.</strong> a_649.txt updated automatically</p>
+                    <p style="margin-top: 10px;"><strong>Result:</strong> Everything synchronized, backup preserved!</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>🎯 Advanced: Distance Elimination</h3>
+                    <p><strong>Step 1:</strong> Generate all possible combinations:</p>
+                    <div class="command-box" style="margin-top: 5px;">python generate_all_649_combos.py</div>
+                    <p style="margin-top: 10px;"><strong>Step 2:</strong> Eliminate by distance:</p>
+                    <div class="command-box" style="margin-top: 5px;">python distance_eliminator_649.py 649ALL.txt a_649.txt 4</div>
+                    <p style="margin-top: 10px;"><strong>Step 3:</strong> Verify results:</p>
+                    <div class="command-box" style="margin-top: 5px;">python verify_4combo_strategy.py a_649.txt</div>
+                    <p style="margin-top: 10px;"><strong>Expected:</strong> ~155,699 remaining combos (with 4457 draws)</p>
+                </div>
+                
+                <div class="info-box blue">
+                    <h3>📊 Files You'll Have</h3>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>a_649.txt</strong> - Master draws file (text format)</li>
+                        <li><strong>lottery-data-new.json</strong> - Current state (draws + tickets)</li>
+                        <li><strong>lottery-data-old.json</strong> - Previous backup</li>
+                        <li><strong>649ALL.txt</strong> - All 13.9M combos (optional, large)</li>
+                        <li><strong>649_remaining.txt</strong> - After elimination (optional)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const MAX = 49;
+        const MAX_PLAY = 6;
+        const TOTAL_4_COMBOS = 211876;
+        
+        let draws = [];
+        let generated = [];
+        let drawn4Combos = new Set();
+        
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+        
+        function get4Combos(numbers) {
+            const combos = [];
+            for (let i = 0; i < numbers.length - 3; i++) {
+                for (let j = i + 1; j < numbers.length - 2; j++) {
+                    for (let k = j + 1; k < numbers.length - 1; k++) {
+                        for (let l = k + 1; l < numbers.length; l++) {
+                            combos.push([numbers[i], numbers[j], numbers[k], numbers[l]].join('-'));
+                        }
+                    }
+                }
+            }
+            return combos;
+        }
+        
+        function countUndrawn4Combos(numbers) {
+            const combos = get4Combos(numbers);
+            let undrawn = 0;
+            combos.forEach(combo => {
+                if (!drawn4Combos.has(combo)) undrawn++;
+            });
+            return { total: combos.length, undrawn: undrawn };
+        }
+        
+        function update4ComboTracking() {
+            drawn4Combos.clear();
+            draws.forEach(draw => {
+                const combos = get4Combos(draw.numbers);
+                combos.forEach(combo => drawn4Combos.add(combo));
+            });
+            updateStats();
+        }
+        
+        function calculateHoles(numbers) {
+            const sorted = [...numbers].sort((a, b) => a - b);
+            let holes = 0;
+            for (let i = 1; i < sorted.length; i++) {
+                if (sorted[i] - sorted[i-1] > 2) holes++;
+            }
+            return holes;
+        }
+        
+        function calculateOdd(numbers) {
+            return numbers.filter(n => n % 2 === 1).length;
+        }
+        
+        function importBulk() {
+            const text = document.getElementById('bulkImport').value;
+            const lines = text.split('\n');
+            let imported = 0;
+            
+            lines.forEach(line => {
+                line = line.trim();
+                if (!line || line.startsWith('#')) return;
+                
+                if (line.includes(':')) {
+                    const parts = line.split(':');
+                    const date = '20' + parts[0].trim();
+                    const numsPart = parts[1].split('/')[0].trim();
+                    const bonusPart = parts[1].split('/')[1];
+                    
+                    const numbers = [];
+                    numsPart.split(',').forEach(n => {
+                        const num = parseInt(n.trim());
+                        if (num >= 1 && num <= MAX) numbers.push(num);
+                    });
+                    
+                    const bonus = bonusPart ? parseInt(bonusPart.trim()) : 0;
+                    
+                    if (numbers.length === MAX_PLAY && bonus >= 1 && bonus <= MAX) {
+                        draws.push({
+                            date: date,
+                            numbers: numbers,
+                            bonus: bonus,
+                            holes: calculateHoles(numbers),
+                            odd: calculateOdd(numbers)
+                        });
+                        imported++;
+                    }
+                }
+            });
+            
+            draws.sort((a, b) => new Date(a.date) - new Date(b.date));
+            update4ComboTracking();
+            updateUI();
+            
+            document.getElementById('bulkImport').value = '';
+            alert(`✅ Imported ${imported} draws`);
+        }
+        
+        function addDraw() {
+            const date = document.getElementById('drawDate').value;
+            const nums = [
+                parseInt(document.getElementById('n1').value),
+                parseInt(document.getElementById('n2').value),
+                parseInt(document.getElementById('n3').value),
+                parseInt(document.getElementById('n4').value),
+                parseInt(document.getElementById('n5').value),
+                parseInt(document.getElementById('n6').value)
+            ];
+            const bonus = parseInt(document.getElementById('bonus').value);
+            
+            if (!date || nums.some(n => isNaN(n) || n < 1 || n > MAX) || 
+                isNaN(bonus) || bonus < 1 || bonus > MAX || new Set(nums).size !== MAX_PLAY) {
+                alert('Please enter valid data');
+                return;
+            }
+            
+            draws.push({
+                date: date,
+                numbers: nums,
+                bonus: bonus,
+                holes: calculateHoles(nums),
+                odd: calculateOdd(nums)
+            });
+            
+            draws.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            ['drawDate','n1','n2','n3','n4','n5','n6','bonus'].forEach(id => 
+                document.getElementById(id).value = '');
+            
+            update4ComboTracking();
+            updateUI();
+            alert('Draw added');
+        }
+        
+        function deleteDraw(index) {
+            draws.splice(index, 1);
+            update4ComboTracking();
+            updateUI();
+        }
+        
+        function generateTickets() {
+            if (draws.length < 10) {
+                alert('Need at least 10 draws');
+                return;
+            }
+            
+            const numTickets = parseInt(document.getElementById('numTickets').value);
+            const holeMin = parseInt(document.getElementById('holeMin').value);
+            const holeMax = parseInt(document.getElementById('holeMax').value);
+            const oddMin = parseInt(document.getElementById('oddMin').value);
+            const oddMax = parseInt(document.getElementById('oddMax').value);
+            
+            const results = [];
+            const maxAttempts = numTickets * 1000;
+            let attempts = 0;
+            
+            while (results.length < numTickets && attempts < maxAttempts) {
+                attempts++;
+                
+                const combo = [];
+                while (combo.length < MAX_PLAY) {
+                    const num = Math.floor(Math.random() * MAX) + 1;
+                    if (!combo.includes(num)) combo.push(num);
+                }
+                combo.sort((a, b) => a - b);
+                
+                const holes = calculateHoles(combo);
+                const odd = calculateOdd(combo);
+                
+                if (holes < holeMin || holes > holeMax || odd < oddMin || odd > oddMax) continue;
+                if (results.some(r => r.numbers.join(',') === combo.join(','))) continue;
+                
+                const comboInfo = countUndrawn4Combos(combo);
+                results.push({
+                    numbers: combo,
+                    holes: holes,
+                    odd: odd,
+                    undrawn4: comboInfo.undrawn,
+                    total4: comboInfo.total
+                });
+            }
+            
+            results.sort((a, b) => b.undrawn4 - a.undrawn4);
+            generated = results;
+            updateUI();
+            alert(`✅ Generated ${results.length} tickets`);
+        }
+        
+        function trimTickets() {
+            const trimNum = parseInt(document.getElementById('trimNumber').value);
+            
+            if (isNaN(trimNum) || trimNum < 1 || trimNum > MAX) {
+                alert('Enter valid number 1-49');
+                return;
+            }
+            
+            if (generated.length === 0) {
+                alert('No tickets to trim');
+                return;
+            }
+            
+            const before = generated.length;
+            generated = generated.filter(t => !t.numbers.includes(trimNum));
+            const removed = before - generated.length;
+            
+            document.getElementById('trimNumber').value = '';
+            document.getElementById('trimStats').innerHTML = 
+                `Removed: <strong>${removed}</strong> | Remaining: <strong>${generated.length}</strong>`;
+            
+            updateUI();
+            alert(removed > 0 ? `✅ Removed ${removed} tickets` : `No tickets had ${trimNum}`);
+        }
+        
+        function exportData() {
+            const data = JSON.stringify({ draws, generated }, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'lottery-data.json';
+            a.click();
+            alert('✅ Exported! File manager will sync automatically if running.');
+        }
+        
+        function importData() {
+            const file = document.getElementById('importFile').files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.draws && Array.isArray(data.draws)) {
+                        draws = data.draws.filter(d => d.numbers && d.numbers.length === MAX_PLAY);
+                    }
+                    if (data.generated && Array.isArray(data.generated)) {
+                        generated = data.generated.filter(t => t.numbers && t.numbers.length === MAX_PLAY);
+                    }
+                    update4ComboTracking();
+                    updateUI();
+                    alert(`✅ Imported!\nDraws: ${draws.length}\nTickets: ${generated.length}`);
+                } catch (err) {
+                    alert('Invalid file: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            document.getElementById('importFile').value = '';
+        }
+        
+        function updateStats() {
+            const drawnCount = drawn4Combos.size;
+            const remaining = TOTAL_4_COMBOS - drawnCount;
+            const percentage = (drawnCount / TOTAL_4_COMBOS * 100).toFixed(2);
+            
+            const els = {
+                totalDraws: draws.length,
+                drawnCombos: drawnCount.toLocaleString(),
+                remainingCombos: remaining.toLocaleString(),
+                coveragePercent: percentage
+            };
+            
+            Object.keys(els).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = els[id];
+            });
+            
+            const bar = document.getElementById('progressBar');
+            if (bar) {
+                bar.style.width = percentage + '%';
+                bar.textContent = percentage + '%';
+            }
+        }
+        
+        function updateUI() {
+            updateStats();
+            
+            ['genCount', 'drawCount'].forEach((id, i) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = [generated.length, draws.length][i];
+            });
+            
+            if (generated.length > 0) {
+                document.getElementById('generatedCard').style.display = 'block';
+                document.getElementById('generatedResults').innerHTML = generated.map(t => `
+                    <div class="combo-item">
+                        <div class="combo-numbers">
+                            ${t.numbers.map(n => `<div class="number-ball">${n}</div>`).join('')}
+                        </div>
+                        <div class="combo-meta">
+                            <strong>Undrawn 4-combos: ${t.undrawn4}/${t.total4}</strong> | 
+                            Holes: ${t.holes} | Odd: ${t.odd}
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('generatedCard').style.display = 'none';
+            }
+            
+            if (draws.length > 0) {
+                document.getElementById('drawsCard').style.display = 'block';
+                document.getElementById('drawsList').innerHTML = [...draws].reverse().map((d, i) => {
+                    const idx = draws.length - 1 - i;
+                    return `
+                        <div class="draw-item">
+                            <div class="draw-content">
+                                <div class="draw-date">${d.date}</div>
+                                <div class="draw-numbers">
+                                    ${d.numbers.map(n => `<div class="draw-ball">${n}</div>`).join('')}
+                                    <div class="draw-ball bonus">${d.bonus}</div>
+                                </div>
+                            </div>
+                            <button class="btn-delete" onclick="deleteDraw(${idx})">🗑️</button>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                document.getElementById('drawsCard').style.display = 'none';
+            }
+            
+            document.getElementById('generateBtn').disabled = draws.length < 10;
+        }
+        
+        updateUI();
+    </script>
+</body>
+</html>
