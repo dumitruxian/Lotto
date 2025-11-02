@@ -913,9 +913,23 @@
                 
                 if (line.includes(':')) {
                     const parts = line.split(':');
-                    const date = '20' + parts[0].trim();
+                    const dateStr = parts[0].trim(); // YYMMDD format
                     const numsPart = parts[1].split('/')[0].trim();
                     const bonusPart = parts[1].split('/')[1];
+                    
+                    // Parse YYMMDD to YYYY-MM-DD
+                    let fullDate = '';
+                    if (dateStr.length === 6) {
+                        const yy = dateStr.substring(0, 2);
+                        const mm = dateStr.substring(2, 4);
+                        const dd = dateStr.substring(4, 6);
+                        
+                        // Convert YY to YYYY (assume 20xx for now, or 19xx if > 50)
+                        const year = parseInt(yy) > 50 ? '19' + yy : '20' + yy;
+                        fullDate = `${year}-${mm}-${dd}`;
+                    } else {
+                        return; // Invalid date format
+                    }
                     
                     const numbers = [];
                     numsPart.split(',').forEach(n => {
@@ -926,24 +940,34 @@
                     const bonus = bonusPart ? parseInt(bonusPart.trim()) : 0;
                     
                     if (numbers.length === MAX_PLAY && bonus >= 1 && bonus <= MAX) {
-                        draws.push({
-                            date: date,
-                            numbers: numbers,
-                            bonus: bonus,
-                            holes: calculateHoles(numbers),
-                            odd: calculateOdd(numbers)
-                        });
-                        imported++;
+                        // Check for duplicates
+                        const isDuplicate = draws.some(d => 
+                            d.date === fullDate && 
+                            d.numbers.every((n, i) => n === numbers[i])
+                        );
+                        
+                        if (!isDuplicate) {
+                            draws.push({
+                                date: fullDate,
+                                numbers: numbers,
+                                bonus: bonus,
+                                holes: calculateHoles(numbers),
+                                odd: calculateOdd(numbers)
+                            });
+                            imported++;
+                        }
                     }
                 }
             });
             
+            // Sort by date (oldest to newest)
             draws.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
             update4ComboTracking();
             updateUI();
             
             document.getElementById('bulkImport').value = '';
-            alert(`✅ Imported ${imported} draws`);
+            alert(`✅ Imported ${imported} draws\nTotal draws: ${draws.length}`);
         }
         
         function addDraw() {
