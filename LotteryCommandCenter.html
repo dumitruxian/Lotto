@@ -486,6 +486,10 @@
                         <p style="font-size: 12px; color: #666; margin-top: 10px;">
                             Current file: <strong id="currentFile">a_649_CA.txt</strong>
                         </p>
+                        <button class="btn-info" onclick="autoLoadFromGitHub()" style="margin-top: 10px;">
+                            🔄 Auto-Load from GitHub
+                        </button>
+                        <div id="autoLoadStatus" style="font-size: 12px; color: #666; margin-top: 10px;"></div>
                     </div>
                     
                     <!-- Strategy Info -->
@@ -825,6 +829,66 @@
         
         const rng = new SeededRandom(randomSeed);
         
+        function autoLoadFromGitHub() {
+            const statusEl = document.getElementById('autoLoadStatus');
+            statusEl.innerHTML = '⏳ Loading from GitHub...';
+            
+            // GitHub raw content URL
+            const baseURL = 'https://raw.githubusercontent.com/dumitruxian/Lotto/main/';
+            const jsonFile = `lottery-data-${currentCountry}.json`;
+            const url = baseURL + jsonFile;
+            
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`File not found: ${jsonFile}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Load country if present
+                    if (data.country) {
+                        currentCountry = data.country;
+                        document.getElementById('countrySelect').value = currentCountry;
+                        const fileName = currentCountry === 'Canada' ? 'a_649_CA.txt' : 'a_649_RO.txt';
+                        document.getElementById('currentFile').textContent = fileName;
+                    }
+                    
+                    // Load seed if present
+                    if (data.seed) {
+                        randomSeed = data.seed;
+                        document.getElementById('randomSeed').value = randomSeed;
+                        rng.setSeed(randomSeed);
+                    }
+                    
+                    // Validate and import draws
+                    if (data.draws && Array.isArray(data.draws)) {
+                        draws = data.draws.filter(d => d.numbers && d.numbers.length === MAX_PLAY);
+                    }
+                    
+                    // Validate and import generated tickets
+                    if (data.generated && Array.isArray(data.generated)) {
+                        generated = data.generated.filter(t => t.numbers && t.numbers.length === MAX_PLAY);
+                    }
+                    
+                    update4ComboTracking();
+                    updateUI();
+                    
+                    statusEl.innerHTML = `✅ Loaded from GitHub<br>Draws: ${draws.length} | Tickets: ${generated.length}`;
+                    alert(`✅ Auto-loaded from GitHub!\n\nCountry: ${currentCountry}\nSeed: ${randomSeed}\nDraws: ${draws.length}\nTickets: ${generated.length}`);
+                })
+                .catch(error => {
+                    statusEl.innerHTML = `❌ Error: ${error.message}`;
+                    alert(`❌ Failed to load from GitHub\n\n${error.message}\n\nMake sure ${jsonFile} exists in your repository.`);
+                });
+        }
+        
+        // Auto-load on page load
+        window.addEventListener('load', function() {
+            // Uncomment the line below to auto-load on page open
+            // autoLoadFromGitHub();
+        });
+        
         function changeCountry() {
             currentCountry = document.getElementById('countrySelect').value;
             const fileName = currentCountry === 'Canada' ? 'a_649_CA.txt' : 'a_649_RO.txt';
@@ -906,56 +970,113 @@
             const text = document.getElementById('bulkImport').value;
             const lines = text.split('\n');
             let imported = 0;
+            let skipped = 0;
+            let duplicates = 0;
+            const errors = [];
             
-            lines.forEach(line => {
+            lines.forEach((line, lineNum) => {
                 line = line.trim();
                 if (!line || line.startsWith('#')) return;
                 
                 if (line.includes(':')) {
-                    const parts = line.split(':');
-                    const dateStr = parts[0].trim(); // YYMMDD format
-                    const numsPart = parts[1].split('/')[0].trim();
-                    const bonusPart = parts[1].split('/')[1];
-                    
-                    // Parse YYMMDD to YYYY-MM-DD
-                    let fullDate = '';
-                    if (dateStr.length === 6) {
-                        const yy = dateStr.substring(0, 2);
-                        const mm = dateStr.substring(2, 4);
-                        const dd = dateStr.substring(4, 6);
+                    try {
+                        const parts = line.split(':');
+                        if (parts.length < 2) {
+                            skipped++;
+                            return;
+                        }
                         
-                        // Convert YY to YYYY (assume 20xx for now, or 19xx if > 50)
-                        const year = parseInt(yy) > 50 ? '19' + yy : '20' + yy;
-                        fullDate = `${year}-${mm}-${dd}`;
-                    } else {
-                        return; // Invalid date format
-                    }
-                    
-                    const numbers = [];
-                    numsPart.split(',').forEach(n => {
-                        const num = parseInt(n.trim());
-                        if (num >= 1 && num <= MAX) numbers.push(num);
-                    });
-                    
-                    const bonus = bonusPart ? parseInt(bonusPart.trim()) : 0;
-                    
-                    if (numbers.length === MAX_PLAY && bonus >= 1 && bonus <= MAX) {
+                        const dateStr = parts[0].trim(); // YYMMDD format
+                        const afterColon = parts[1];
+                        
+                        if (!afterColon || !afterColon.includes('/')) {
+                            errors.push(`Line ${lineNum + 1}: Missing / separator`);
+                            skipped++;
+                            return;
+                        }
+                        
+                        const numsPart = afterColon.split('/')[0].trim();
+                        const bonusPart = afterColon.split('/')[1];
+                        
+                        // Parse YYMMDD to YYYY-MM-DD
+                        let fullDate = '';
+                        if (dateStr.length === 6 && /^\d{6}$/.test(dateStr)) {
+                            const yy = dateStr.substring(0, 2);
+                            const mm = dateStr.substring(2, 4);
+                            const dd = dateStr.substring(4, 6);
+                            
+                            // Validate month and day
+                            const monthNum = parseInt(mm);
+                            const dayNum = parseInt(dd);
+                            
+                            if (monthNum < 1 || monthNum > 12) {
+                                errors.push(`Line ${lineNum + 1}: Invalid month ${mm}`);
+                                skipped++;
+                                return;
+                            }
+                            
+                            if (dayNum < 1 || dayNum > 31) {
+                                errors.push(`Line ${lineNum + 1}: Invalid day ${dd}`);
+                                skipped++;
+                                return;
+                            }
+                            
+                            // Convert YY to YYYY (assume 20xx for now, or 19xx if > 50)
+                            const year = parseInt(yy) > 50 ? '19' + yy : '20' + yy;
+                            fullDate = `${year}-${mm}-${dd}`;
+                        } else {
+                            errors.push(`Line ${lineNum + 1}: Invalid date format "${dateStr}"`);
+                            skipped++;
+                            return;
+                        }
+                        
+                        const numbers = [];
+                        const numTokens = numsPart.split(',');
+                        
+                        numTokens.forEach(n => {
+                            const num = parseInt(n.trim());
+                            if (!isNaN(num) && num >= 1 && num <= MAX) {
+                                numbers.push(num);
+                            }
+                        });
+                        
+                        if (numbers.length !== MAX_PLAY) {
+                            errors.push(`Line ${lineNum + 1}: Expected ${MAX_PLAY} numbers, got ${numbers.length}`);
+                            skipped++;
+                            return;
+                        }
+                        
+                        const bonus = bonusPart ? parseInt(bonusPart.trim()) : 0;
+                        
+                        if (isNaN(bonus) || bonus < 1 || bonus > MAX) {
+                            errors.push(`Line ${lineNum + 1}: Invalid bonus "${bonusPart}"`);
+                            skipped++;
+                            return;
+                        }
+                        
                         // Check for duplicates
                         const isDuplicate = draws.some(d => 
                             d.date === fullDate && 
-                            d.numbers.every((n, i) => n === numbers[i])
+                            JSON.stringify(d.numbers.sort()) === JSON.stringify(numbers.sort())
                         );
                         
-                        if (!isDuplicate) {
-                            draws.push({
-                                date: fullDate,
-                                numbers: numbers,
-                                bonus: bonus,
-                                holes: calculateHoles(numbers),
-                                odd: calculateOdd(numbers)
-                            });
-                            imported++;
+                        if (isDuplicate) {
+                            duplicates++;
+                            return;
                         }
+                        
+                        draws.push({
+                            date: fullDate,
+                            numbers: numbers,
+                            bonus: bonus,
+                            holes: calculateHoles(numbers),
+                            odd: calculateOdd(numbers)
+                        });
+                        imported++;
+                        
+                    } catch (e) {
+                        errors.push(`Line ${lineNum + 1}: ${e.message}`);
+                        skipped++;
                     }
                 }
             });
@@ -967,7 +1088,20 @@
             updateUI();
             
             document.getElementById('bulkImport').value = '';
-            alert(`✅ Imported ${imported} draws\nTotal draws: ${draws.length}`);
+            
+            let message = `✅ Import Complete\n\n`;
+            message += `Imported: ${imported}\n`;
+            message += `Duplicates: ${duplicates}\n`;
+            message += `Skipped: ${skipped}\n`;
+            message += `Total draws: ${draws.length}\n`;
+            
+            if (errors.length > 0 && errors.length <= 10) {
+                message += `\nErrors:\n${errors.join('\n')}`;
+            } else if (errors.length > 10) {
+                message += `\nErrors: ${errors.length} (first 10):\n${errors.slice(0, 10).join('\n')}`;
+            }
+            
+            alert(message);
         }
         
         function addDraw() {
@@ -1332,7 +1466,8 @@
                                 <div class="draw-date">${d.date}</div>
                                 <div class="draw-numbers">
                                     ${d.numbers.map(n => `<div class="draw-ball">${n}</div>`).join('')}
-                                                                    				</div>
+                                    <div class="draw-ball bonus">${d.bonus}</div>
+                                </div>
                             </div>
                             <button class="btn-delete" onclick="deleteDraw(${idx})">🗑️</button>
                         </div>
