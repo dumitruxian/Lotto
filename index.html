@@ -219,8 +219,8 @@
                         <div class="param-group">
                             <label>Country</label>
                             <select id="countrySelect" onchange="changeCountry()" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
-                                <option value="Canada">🇨🇦 Canada</option>
-                                <option value="Romania">🇷🇴 Romania</option>
+                                <option value="Canada">🇨🇦 Canada (with bonus)</option>
+                                <option value="Romania">🇷🇴 Romania (no bonus)</option>
                                 <option value="Europe">🇪🇺 Europe</option>
                             </select>
                         </div>
@@ -328,7 +328,20 @@
                         <button class="btn-success" onclick="generateTickets()" id="generateBtn">🎲 Generate</button>
                     </div>
                     
-                    <!-- Trim & Check -->
+                    <!-- Check Tickets Against Last Draw -->
+                    <div class="card">
+                        <h2>🎯 Check Last Draw</h2>
+                        <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                            Check generated tickets against the most recent draw
+                        </p>
+                        <div id="lastDrawDisplay" style="background: #f0f9ff; padding: 10px; border-radius: 5px; margin-bottom: 10px; font-size: 12px; color: #666;">
+                            No draws loaded yet
+                        </div>
+                        <button class="btn-success" onclick="checkAgainstLastDraw()">🔍 Check Winners</button>
+                        <div id="checkLastResults" style="font-size: 12px; margin-top: 10px;"></div>
+                    </div>
+                    
+                    <!-- Trim & Export Played -->
                     <div class="card">
                         <h2>✂️ Trim</h2>
                         <input type="number" id="trimNumber" min="1" placeholder="Number to remove">
@@ -396,26 +409,115 @@
         <!-- WORKFLOW TAB -->
         <div id="workflow" class="tab-content">
             <div class="card">
-                <h2>📋 Quick Guide</h2>
+                <h2>📋 Complete Guide</h2>
+                
                 <div class="info-box">
-                    <h3>🚀 Getting Started</h3>
-                    <p><strong>1.</strong> Select game type (6/49 or EuroMillions)</p>
-                    <p><strong>2.</strong> Select country</p>
-                    <p><strong>3.</strong> Click "Auto-Load" or import draws manually</p>
-                    <p><strong>4.</strong> Choose combo strategy (3, 4, or 5)</p>
-                    <p><strong>5.</strong> Generate tickets</p>
+                    <h3>🎮 Game Selection</h3>
+                    <p><strong>Game Type:</strong> Choose between 6/49 or EuroMillions (5/50+2/12)</p>
+                    <p><strong>Country:</strong> Canada/Romania for 6/49, Europe for EuroMillions</p>
+                    <p><strong>Auto-Load:</strong> Fetches data from GitHub repository automatically</p>
                 </div>
+                
                 <div class="info-box">
-                    <h3>🎯 Combo Strategies</h3>
-                    <p><strong>3-Combo:</strong> Less exhausted, good for new lotteries (EuroMillions)</p>
-                    <p><strong>4-Combo:</strong> Balanced, default for 6/49</p>
-                    <p><strong>5-Combo:</strong> More restrictive, advanced analysis</p>
+                    <h3>📊 Combo Strategy</h3>
+                    <p><strong>What it means:</strong> Tracks X-number combinations from historical draws</p>
+                    <p><strong>3-Combo Analysis:</strong> Tracks all 3-number combinations (19,600 for EuroMillions, 18,424 for 6/49)</p>
+                    <p><strong>4-Combo Analysis:</strong> DEFAULT - Tracks all 4-number combinations (230,300 for EuroMillions, 211,876 for 6/49)</p>
+                    <p><strong>5-Combo Analysis:</strong> Tracks all 5-number combinations (2,118,760 for EuroMillions, 1,906,884 for 6/49)</p>
+                    <p><strong>Purpose:</strong> Shows which combinations are "undrawn" (never appeared in any historical draw)</p>
+                    <p><strong>Best for:</strong> 3-combo for new lotteries (fewer draws), 4-combo balanced, 5-combo advanced</p>
                 </div>
+                
                 <div class="info-box">
-                    <h3>🎰 EuroMillions</h3>
+                    <h3>🎲 Generation Parameters</h3>
+                    
+                    <p><strong>Random Seed:</strong> Number that controls randomness. Same seed + same data = identical tickets on all devices. Change seed to get different ticket sets.</p>
+                    
+                    <p><strong>Distance Filter:</strong></p>
+                    <p>• <strong>No Distance Filter:</strong> No restrictions, easiest to generate tickets</p>
+                    <p>• <strong>Distance 3 ONLY:</strong> Each ticket must differ from checked draws by EXACTLY 3 numbers (shares 3 numbers)</p>
+                    <p>• <strong>Distance 4 ONLY:</strong> Each ticket must differ from checked draws by EXACTLY 4 numbers (shares 2 numbers)</p>
+                    <p><em>Example: If draw is [5,12,23,31,42,45] and ticket is [5,12,18,27,33,38], they share 2 numbers (5,12) so distance = 4</em></p>
+                    
+                    <p><strong>Check Against:</strong></p>
+                    <p>• <strong>Last 10/20/50 draws:</strong> Only checks distance against recent draws (faster, more results)</p>
+                    <p>• <strong>All draws:</strong> Checks distance against entire history (stricter, fewer results)</p>
+                    
+                    <p><strong>Holes:</strong> Number of "interval gaps" in the ticket</p>
+                    <p>• <strong>Intervals:</strong> 1-9, 10-19, 20-29, 30-39, 40-49</p>
+                    <p>• <strong>Hole = Missing interval:</strong> If ticket has no numbers in an interval, that's 1 hole</p>
+                    <p>• <strong>Example:</strong> Ticket [3,12,23,35,42,48] has numbers in 1-9(3), 10-19(12), 20-29(23), 30-39(35), 40-49(42,48) = 0 holes (all intervals covered)</p>
+                    <p>• <strong>Example:</strong> Ticket [5,8,25,28,42,45] has numbers in 1-9(5,8), 20-29(25,28), 40-49(42,45) = 2 holes (missing 10-19 and 30-39)</p>
+                    <p>• <strong>Typical:</strong> Min=1, Max=2 (allows 1-2 missing intervals)</p>
+                    
+                    <p><strong>Odd Min/Max:</strong> How many odd numbers in the ticket</p>
+                    <p>• <strong>Odd numbers:</strong> 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49</p>
+                    <p>• <strong>Even numbers:</strong> 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48</p>
+                    <p>• <strong>Example:</strong> Ticket [5,12,23,31,42,45] has 4 odd (5,23,31,45) and 2 even (12,42)</p>
+                    <p>• <strong>Typical:</strong> Min=2, Max=4 (balanced distribution)</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>✨ Understanding Generated Tickets</h3>
+                    <p><strong>Display Format:</strong> #N | Undrawn X-combos: A/B | Dist: C | H: D | O: E</p>
+                    
+                    <p><strong>#N:</strong> Ticket number (1-100)</p>
+                    
+                    <p><strong>Undrawn X-combos: A/B:</strong></p>
+                    <p>• <strong>X:</strong> Combo strategy you selected (3, 4, or 5)</p>
+                    <p>• <strong>A:</strong> How many X-number combos in this ticket are UNDRAWN (never appeared in history)</p>
+                    <p>• <strong>B:</strong> Total possible X-number combos in this ticket</p>
+                    <p>• <strong>Example "Undrawn 3-combos: 8/10":</strong></p>
+                    <p>&nbsp;&nbsp;- This ticket contains 10 different 3-number combinations</p>
+                    <p>&nbsp;&nbsp;- 8 of them have NEVER appeared in any historical draw</p>
+                    <p>&nbsp;&nbsp;- 2 of them HAVE appeared before</p>
+                    <p>• <strong>Why it matters:</strong> Higher A = more "fresh" combinations that haven't been drawn</p>
+                    <p>• <strong>Best tickets:</strong> Highest A/B ratio (e.g., 15/15 = all undrawn!)</p>
+                    
+                    <p><strong>Dist: C:</strong> Minimum distance from ALL historical draws</p>
+                    <p>• Shows how different this ticket is from every draw in history</p>
+                    <p>• Higher = more different from past draws</p>
+                    <p>• This is NOT the same as the combo strategy number!</p>
+                    
+                    <p><strong>H: D:</strong> Number of holes (missing intervals)</p>
+                    <p><strong>O: E:</strong> Number of odd numbers</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>🎯 Check Last Draw</h3>
+                    <p><strong>Purpose:</strong> Automatically checks all generated tickets against the most recent draw</p>
+                    <p><strong>Shows:</strong> How many tickets won prizes (6 match, 5+bonus, 5 match, 4 match, 3 match)</p>
+                    <p><strong>Use case:</strong> Simulation testing - see how well your strategy performs</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>📋 Export Played Tickets</h3>
+                    <p><strong>Purpose:</strong> Save generated tickets as a text file for actual play</p>
+                    <p><strong>Format:</strong> 649_played.txt or 550_played.txt</p>
+                    <p><strong>Use case:</strong> Take this file to lottery retailer or track which tickets you bought</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>💡 Recommended Workflow</h3>
+                    <p><strong>1.</strong> Select game and country → Auto-load data</p>
+                    <p><strong>2.</strong> Choose combo strategy (4-combo recommended)</p>
+                    <p><strong>3.</strong> Set generation parameters:</p>
+                    <p>&nbsp;&nbsp;• Start with "No Distance Filter" + "Last 10 draws"</p>
+                    <p>&nbsp;&nbsp;• Holes: 1-2, Odd: 2-4</p>
+                    <p><strong>4.</strong> Generate 100 tickets</p>
+                    <p><strong>5.</strong> Review tickets (look for high undrawn combos)</p>
+                    <p><strong>6.</strong> Trim unwanted numbers if needed</p>
+                    <p><strong>7.</strong> Export played tickets</p>
+                    <p><strong>8.</strong> After draw: Check winners against last draw</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>🎰 EuroMillions Specifics</h3>
                     <p><strong>Format:</strong> 5 main numbers (1-50) + 2 stars (1-12)</p>
                     <p><strong>Import:</strong> YYMMDD: n1, n2, n3, n4, n5 / s1, s2</p>
                     <p><strong>Example:</strong> 251205: 3, 12, 18, 34, 42 / 5, 9</p>
+                    <p><strong>Stars:</strong> Always unique (star 1 ≠ star 2)</p>
+                    <p><strong>Combo strategy:</strong> Applies only to main 5 numbers, not stars</p>
                 </div>
             </div>
         </div>
@@ -429,14 +531,16 @@
                 mainCount: 6,
                 bonusCount: 1,
                 bonusMax: 49,
-                totalCombos: {3: 18424, 4: 211876, 5: 1906884}
+                totalCombos: {3: 18424, 4: 211876, 5: 1906884},
+                hasBonus: true // Will be set per country
             },
             'euromillions': {
                 mainMax: 50,
                 mainCount: 5,
                 bonusCount: 2,
                 bonusMax: 12,
-                totalCombos: {3: 19600, 4: 230300, 5: 2118760}
+                totalCombos: {3: 19600, 4: 230300, 5: 2118760},
+                hasBonus: true
             }
         };
         
@@ -593,6 +697,12 @@
         function changeCountry() {
             currentCountry = document.getElementById('countrySelect').value;
             const isEuro = currentCountry === 'Europe';
+            const hasBonus = currentCountry !== 'Romania';
+            
+            // Update config
+            if (currentGame === '649') {
+                GAME_CONFIGS['649'].hasBonus = hasBonus;
+            }
             
             // Auto-switch game type based on country
             if (isEuro && currentGame !== 'euromillions') {
@@ -603,11 +713,33 @@
                 currentGame = '649';
                 document.getElementById('gameType').value = '649';
                 updateGameUI();
+            } else {
+                // Just update bonus section
+                updateBonusSection();
             }
             
-            const fileName = isEuro ? 'a_550_12_EU.txt' :
+            const fileName = isEuro ? 'a_550_12_EU.txt' : 
                            (currentCountry === 'Canada' ? 'a_649_CA.txt' : 'a_649_RO.txt');
             document.getElementById('currentFile').textContent = fileName;
+        }
+        
+        function updateBonusSection() {
+            const config = GAME_CONFIGS[currentGame];
+            const hasBonus = config.hasBonus;
+            const bonusSection = document.getElementById('bonusSection');
+            
+            if (currentGame === 'euromillions') {
+                bonusSection.innerHTML = `
+                    <div class="number-grid-2">
+                        <input type="number" id="star1" min="1" max="12" placeholder="Star 1">
+                        <input type="number" id="star2" min="1" max="12" placeholder="Star 2">
+                    </div>
+                `;
+            } else if (hasBonus) {
+                bonusSection.innerHTML = `<input type="number" id="bonus" min="1" max="${config.mainMax}" placeholder="Bonus">`;
+            } else {
+                bonusSection.innerHTML = `<p style="font-size: 12px; color: #666;">No bonus number for Romania</p>`;
+            }
         }
         
         function changeStrategy() {
@@ -991,6 +1123,192 @@
             
             updateUI();
             alert(removed > 0 ? `✅ Removed ${removed} tickets` : `No tickets had ${trimNum}`);
+        }
+        
+        function checkAgainstLastDraw() {
+            if (draws.length === 0) {
+                alert('No draws loaded');
+                return;
+            }
+            
+            if (generated.length === 0) {
+                alert('No tickets generated. Generate tickets first.');
+                return;
+            }
+            
+            const lastDraw = draws[draws.length - 1];
+            const config = GAME_CONFIGS[currentGame];
+            const isEuro = currentGame === 'euromillions';
+            
+            // Display last draw
+            const mainBalls = lastDraw.numbers.map(n => `[${n}]`).join(' ');
+            const bonusBalls = lastDraw.bonuses.map(b => isEuro ? `⭐${b}` : `🔴${b}`).join(' ');
+            document.getElementById('lastDrawDisplay').innerHTML = 
+                `<strong>Last Draw (${lastDraw.date}):</strong><br>${mainBalls} ${bonusBalls}`;
+            
+            // Check each ticket
+            const results = {
+                '6': [], '5+bonus': [], '5': [], '4': [], '3': [], '2': [], '1': [], '0': []
+            };
+            
+            if (isEuro) {
+                results['5+2stars'] = [];
+                results['5+1star'] = [];
+                delete results['5+bonus'];
+            }
+            
+            generated.forEach((ticket, index) => {
+                const ticketSet = new Set(ticket.numbers);
+                const drawSet = new Set(lastDraw.numbers);
+                let mainMatches = 0;
+                
+                ticketSet.forEach(num => {
+                    if (drawSet.has(num)) mainMatches++;
+                });
+                
+                if (isEuro) {
+                    // Check star matches
+                    const ticketStars = new Set(ticket.bonuses);
+                    const drawStars = new Set(lastDraw.bonuses);
+                    let starMatches = 0;
+                    ticketStars.forEach(star => {
+                        if (drawStars.has(star)) starMatches++;
+                    });
+                    
+                    if (mainMatches === 5 && starMatches === 2) {
+                        results['5+2stars'].push(index + 1);
+                    } else if (mainMatches === 5 && starMatches === 1) {
+                        results['5+1star'].push(index + 1);
+                    } else if (mainMatches === 5) {
+                        results['5'].push(index + 1);
+                    } else if (mainMatches === 4) {
+                        results['4'].push(index + 1);
+                    } else if (mainMatches === 3) {
+                        results['3'].push(index + 1);
+                    } else if (mainMatches === 2) {
+                        results['2'].push(index + 1);
+                    } else if (mainMatches === 1) {
+                        results['1'].push(index + 1);
+                    } else {
+                        results['0'].push(index + 1);
+                    }
+                } else {
+                    // 6/49 logic
+                    const hasBonus = ticket.bonuses.some(b => lastDraw.bonuses.includes(b));
+                    
+                    if (mainMatches === 6) {
+                        results['6'].push(index + 1);
+                    } else if (mainMatches === 5 && hasBonus) {
+                        results['5+bonus'].push(index + 1);
+                    } else if (mainMatches === 5) {
+                        results['5'].push(index + 1);
+                    } else if (mainMatches === 4) {
+                        results['4'].push(index + 1);
+                    } else if (mainMatches === 3) {
+                        results['3'].push(index + 1);
+                    } else if (mainMatches === 2) {
+                        results['2'].push(index + 1);
+                    } else if (mainMatches === 1) {
+                        results['1'].push(index + 1);
+                    } else {
+                        results['0'].push(index + 1);
+                    }
+                }
+            });
+            
+            // Display results
+            let html = '<div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin-top: 10px;">';
+            html += '<strong>Results:</strong><br><br>';
+            
+            const prizes = isEuro ? {
+                '5+2stars': '🏆 5+2 Stars',
+                '5+1star': '💎 5+1 Star',
+                '5': '🎁 5 Match',
+                '4': '🎯 4 Match',
+                '3': '🎫 3 Match'
+            } : {
+                '6': '🏆 JACKPOT',
+                '5+bonus': '💎 5+Bonus',
+                '5': '🎁 5 Match',
+                '4': '🎯 4 Match',
+                '3': '🎫 3 Match'
+            };
+            
+            let hasWinners = false;
+            for (const [key, label] of Object.entries(prizes)) {
+                if (results[key] && results[key].length > 0) {
+                    hasWinners = true;
+                    html += `<div style="margin-bottom: 5px; color: #059669;">`;
+                    html += `<strong>${label}:</strong> ${results[key].length} ticket(s)`;
+                    if (results[key].length <= 20) {
+                        html += ` - #${results[key].join(', #')}`;
+                    }
+                    html += '</div>';
+                }
+            }
+            
+            if (!hasWinners) {
+                html += '<div style="color: #666;">No winning tickets (3+ matches)</div>';
+            }
+            
+            html += '</div>';
+            document.getElementById('checkLastResults').innerHTML = html;
+            
+            // Summary alert
+            const winningTickets = Object.keys(prizes).reduce((sum, key) => 
+                sum + (results[key] ? results[key].length : 0), 0);
+            
+            if (winningTickets > 0) {
+                let alertMsg = `🎉 Found ${winningTickets} winning tickets!\n\n`;
+                Object.keys(prizes).forEach(key => {
+                    if (results[key] && results[key].length > 0) {
+                        alertMsg += `${prizes[key]}: ${results[key].length}\n`;
+                    }
+                });
+                alert(alertMsg);
+            } else {
+                alert('No winning tickets found (no 3+ matches)');
+            }
+        }
+        
+        function exportPlayed() {
+            if (generated.length === 0) {
+                alert('No tickets to export. Generate tickets first.');
+                return;
+            }
+            
+            const isEuro = currentGame === 'euromillions';
+            const fileName = isEuro ? '550_played.txt' : '649_played.txt';
+            
+            let content = `# Played Tickets - ${currentGame === 'euromillions' ? 'EuroMillions' : '6/49'}\n`;
+            content += `# Generated: ${new Date().toISOString().split('T')[0]}\n`;
+            content += `# Total tickets: ${generated.length}\n`;
+            content += `# Seed: ${randomSeed}\n`;
+            content += `#\n`;
+            
+            if (isEuro) {
+                content += `# Format: N1, N2, N3, N4, N5 / Star1, Star2\n#\n`;
+                generated.forEach((ticket, i) => {
+                    const mainNums = ticket.numbers.map(n => String(n).padStart(2, ' ')).join(', ');
+                    const stars = ticket.bonuses.join(', ');
+                    content += `${mainNums} / ${stars}\n`;
+                });
+            } else {
+                content += `# Format: N1, N2, N3, N4, N5, N6 / Bonus\n#\n`;
+                generated.forEach((ticket, i) => {
+                    const nums = ticket.numbers.map(n => String(n).padStart(2, ' ')).join(', ');
+                    content += `${nums} / ${ticket.bonuses[0]}\n`;
+                });
+            }
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            
+            alert(`✅ Exported ${generated.length} tickets to ${fileName}`);
         }
         
         function autoLoadFromGitHub() {
