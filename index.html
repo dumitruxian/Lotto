@@ -293,6 +293,16 @@
                             <select id="distanceFilter" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
                                 <option value="3">Distance 3 ONLY</option>
                                 <option value="4" selected>Distance 4 ONLY</option>
+                                <option value="0">No Distance Filter</option>
+                            </select>
+                        </div>
+                        <div class="param-group">
+                            <label>Check Against</label>
+                            <select id="checkDraws" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                                <option value="10">Last 10 draws</option>
+                                <option value="20">Last 20 draws</option>
+                                <option value="50">Last 50 draws</option>
+                                <option value="0">All draws</option>
                             </select>
                         </div>
                         <div class="param-row">
@@ -453,6 +463,48 @@
         }
         const rng = new SeededRandom(randomSeed);
         
+        // Load saved settings from localStorage
+        function loadSettings() {
+            try {
+                const saved = localStorage.getItem('lotterySettings');
+                if (saved) {
+                    const settings = JSON.parse(saved);
+                    if (settings.holeMin !== undefined) document.getElementById('holeMin').value = settings.holeMin;
+                    if (settings.holeMax !== undefined) document.getElementById('holeMax').value = settings.holeMax;
+                    if (settings.oddMin !== undefined) document.getElementById('oddMin').value = settings.oddMin;
+                    if (settings.oddMax !== undefined) document.getElementById('oddMax').value = settings.oddMax;
+                    if (settings.randomSeed !== undefined) {
+                        randomSeed = settings.randomSeed;
+                        document.getElementById('randomSeed').value = randomSeed;
+                        rng.setSeed(randomSeed);
+                    }
+                    if (settings.comboSize !== undefined) {
+                        comboSize = settings.comboSize;
+                        document.getElementById('comboStrategy').value = comboSize;
+                    }
+                }
+            } catch (e) {
+                console.log('Could not load settings:', e);
+            }
+        }
+        
+        // Save settings to localStorage
+        function saveSettings() {
+            try {
+                const settings = {
+                    holeMin: parseInt(document.getElementById('holeMin').value),
+                    holeMax: parseInt(document.getElementById('holeMax').value),
+                    oddMin: parseInt(document.getElementById('oddMin').value),
+                    oddMax: parseInt(document.getElementById('oddMax').value),
+                    randomSeed: randomSeed,
+                    comboSize: comboSize
+                };
+                localStorage.setItem('lotterySettings', JSON.stringify(settings));
+            } catch (e) {
+                console.log('Could not save settings:', e);
+            }
+        }
+        
         function switchTab(tabName) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -491,7 +543,7 @@
             }
             
             // Update file name
-            const fileName = isEuro ? 'a_550_EU.txt' : 
+            const fileName = isEuro ? 'a_550_12_EU.txt' : 
                            (currentCountry === 'Canada' ? 'a_649_CA.txt' : 'a_649_RO.txt');
             document.getElementById('currentFile').textContent = fileName;
             
@@ -529,17 +581,11 @@
             
             // Update distance options
             const distEl = document.getElementById('distanceFilter');
-            if (isEuro) {
-                distEl.innerHTML = `
-                    <option value="3">Distance 3 ONLY</option>
-                    <option value="4" selected>Distance 4 ONLY</option>
-                `;
-            } else {
-                distEl.innerHTML = `
-                    <option value="3">Distance 3 ONLY</option>
-                    <option value="4" selected>Distance 4 ONLY</option>
-                `;
-            }
+            distEl.innerHTML = `
+                <option value="0">No Distance Filter</option>
+                <option value="3">Distance 3 ONLY</option>
+                <option value="4" selected>Distance 4 ONLY</option>
+            `;
             
             updateComboTotals();
         }
@@ -835,12 +881,19 @@
             const oddMin = parseInt(document.getElementById('oddMin').value);
             const oddMax = parseInt(document.getElementById('oddMax').value);
             const requiredDistance = parseInt(document.getElementById('distanceFilter').value);
+            const checkDrawsCount = parseInt(document.getElementById('checkDraws').value);
             
             rng.setSeed(randomSeed);
             
             const results = [];
             const maxAttempts = numTickets * 50000;
             let attempts = 0;
+            
+            // Get draws to check against
+            const drawsToCheck = checkDrawsCount === 0 ? draws : draws.slice(-checkDrawsCount);
+            const useDistance = requiredDistance > 0;
+            
+            console.log(`Generating with: holes ${holeMin}-${holeMax}, odd ${oddMin}-${oddMax}, distance ${requiredDistance}, checking ${drawsToCheck.length} draws`);
             
             while (results.length < numTickets && attempts < maxAttempts) {
                 attempts++;
@@ -855,19 +908,22 @@
                 const holes = calculateHoles(combo);
                 const odd = calculateOdd(combo);
                 
-                if (holes < holeMin || holes > holeMax || odd < oddMin || odd > oddMax) continue;
+                if (holes < holeMin || holes > holeMax) continue;
+                if (odd < oddMin || odd > oddMax) continue;
                 
-                // Check distance from ALL draws
-                let validDistance = true;
-                for (const draw of draws) {
-                    const dist = calculateDistance(combo, draw.numbers);
-                    if (dist !== requiredDistance) {
-                        validDistance = false;
-                        break;
+                // Check distance only if enabled
+                if (useDistance) {
+                    let validDistance = true;
+                    for (const draw of drawsToCheck) {
+                        const dist = calculateDistance(combo, draw.numbers);
+                        if (dist !== requiredDistance) {
+                            validDistance = false;
+                            break;
+                        }
                     }
+                    if (!validDistance) continue;
                 }
                 
-                if (!validDistance) continue;
                 if (results.some(r => r.numbers.join(',') === combo.join(','))) continue;
                 
                 const comboInfo = countUndrawnCombos(combo);
@@ -898,12 +954,16 @@
             generated = results;
             updateUI();
             
+            const distText = useDistance ? 
+                `Distance ${requiredDistance} against ${drawsToCheck.length} draws` : 
+                'No distance filter';
+            
             if (results.length === 0) {
-                alert(`⚠️ No tickets found!\n\nTried ${attempts} combinations.\n\nTry relaxing constraints.`);
+                alert(`⚠️ No tickets found!\n\nTried ${attempts.toLocaleString()} combinations.\n\n${distText}\nHoles: ${holeMin}-${holeMax}\nOdd: ${oddMin}-${oddMax}\n\nTry:\n• Disable distance filter\n• Relax hole/odd constraints\n• Check fewer draws`);
             } else if (results.length < numTickets) {
-                alert(`⚠️ Generated ${results.length} tickets (wanted ${numTickets})\n\nUsing seed: ${randomSeed}\nDistance ${requiredDistance} ONLY`);
+                alert(`⚠️ Generated ${results.length} tickets (wanted ${numTickets})\n\nSeed: ${randomSeed}\n${distText}\nHoles: ${holeMin}-${holeMax}\nOdd: ${oddMin}-${oddMax}`);
             } else {
-                alert(`✅ Generated ${results.length} tickets\n\nSeed: ${randomSeed}\nDistance ${requiredDistance} ONLY\nCombo size: ${comboSize}`);
+                alert(`✅ Generated ${results.length} tickets\n\nSeed: ${randomSeed}\n${distText}\nCombo: ${comboSize}-combos`);
             }
         }
         
@@ -1193,8 +1253,15 @@
         }
         
         // Initialize
+        loadSettings();
         updateGameUI();
         updateUI();
+        
+        // Save settings when inputs change
+        ['holeMin', 'holeMax', 'oddMin', 'oddMax'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('change', saveSettings);
+        });
     </script>
 </body>
 </html>
