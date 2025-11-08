@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lottery Command Center - Multi-Game</title>
+    <title>Lottery Command Center v51 - Multi-Game</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -192,7 +192,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎰 Multi-Game Lottery Command Center</h1>
+            <h1>🎰 Multi-Game Lottery Command Center v51</h1>
             <p>6/49, EuroMillions (5/50+2/12) - Advanced combo analysis and generation</p>
         </div>
         
@@ -211,14 +211,14 @@
                         <h2>🎮 Game Selection</h2>
                         <div class="param-group">
                             <label>Game Type</label>
-                            <select id="gameType" onchange="changeGame()" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                            <select id="gameType" onchange="changeGame()">
                                 <option value="649">6/49 Lottery</option>
                                 <option value="euromillions">EuroMillions (5/50 + 2/12)</option>
                             </select>
                         </div>
                         <div class="param-group">
                             <label>Country</label>
-                            <select id="countrySelect" onchange="changeCountry()" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                            <select id="countrySelect" onchange="changeCountry()">
                                 <option value="Canada">🇨🇦 Canada (with bonus)</option>
                                 <option value="Romania">🇷🇴 Romania (no bonus)</option>
                                 <option value="Europe">🇪🇺 Europe</option>
@@ -238,7 +238,7 @@
                         <h2>⚙️ Strategy</h2>
                         <div class="param-group">
                             <label>Combo Strategy</label>
-                            <select id="comboStrategy" onchange="changeStrategy()" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                            <select id="comboStrategy" onchange="changeStrategy()">
                                 <option value="3">3-Combo Analysis</option>
                                 <option value="4" selected>4-Combo Analysis</option>
                                 <option value="5">5-Combo Analysis</option>
@@ -290,7 +290,7 @@
                         </div>
                         <div class="param-group">
                             <label>Distance Filter</label>
-                            <select id="distanceFilter" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                            <select id="distanceFilter">
                                 <option value="3">Distance 3 ONLY</option>
                                 <option value="4" selected>Distance 4 ONLY</option>
                                 <option value="0">No Distance Filter</option>
@@ -298,7 +298,7 @@
                         </div>
                         <div class="param-group">
                             <label>Check Against</label>
-                            <select id="checkDraws" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                            <select id="checkDraws">
                                 <option value="10">Last 10 draws</option>
                                 <option value="20">Last 20 draws</option>
                                 <option value="50">Last 50 draws</option>
@@ -347,6 +347,15 @@
                         <input type="number" id="trimNumber" min="1" placeholder="Number to remove">
                         <button class="btn-warning" onclick="trimTickets()">Remove</button>
                         <div id="trimStats" style="font-size: 12px; color: #666; margin-top: 10px;"></div>
+                    </div>
+                    
+                    <!-- Export Played -->
+                    <div class="card">
+                        <h2>📋 Export Played</h2>
+                        <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                            Save generated tickets to Play file
+                        </p>
+                        <button class="btn-success" onclick="exportPlayed()">💾 Export Tickets</button>
                     </div>
                     
                     <!-- Data Management -->
@@ -493,8 +502,11 @@
                 <div class="info-box">
                     <h3>📋 Export Played Tickets</h3>
                     <p><strong>Purpose:</strong> Save generated tickets as a text file for actual play</p>
-                    <p><strong>Format:</strong> 649_played.txt or 550_played.txt</p>
+                    <p><strong>Format:</strong> Play_CA.txt (Canada), Play_RO.txt (Romania), Play_EU.txt (Europe)</p>
+                    <p><strong>Auto-save:</strong> Files are automatically prepared when you click "Generate" and saved to browser storage</p>
+                    <p><strong>Manual export:</strong> Click "Export Tickets" button to download the file</p>
                     <p><strong>Use case:</strong> Take this file to lottery retailer or track which tickets you bought</p>
+                    <p><strong>Check against draws:</strong> Use "Check Last Draw" to verify your Play file tickets against new draws</p>
                 </div>
                 
                 <div class="info-box">
@@ -504,10 +516,10 @@
                     <p><strong>3.</strong> Set generation parameters:</p>
                     <p>&nbsp;&nbsp;• Start with "No Distance Filter" + "Last 10 draws"</p>
                     <p>&nbsp;&nbsp;• Holes: 1-2, Odd: 2-4</p>
-                    <p><strong>4.</strong> Generate 100 tickets</p>
+                    <p><strong>4.</strong> Generate 100 tickets (auto-creates Play file)</p>
                     <p><strong>5.</strong> Review tickets (look for high undrawn combos)</p>
                     <p><strong>6.</strong> Trim unwanted numbers if needed</p>
-                    <p><strong>7.</strong> Export played tickets</p>
+                    <p><strong>7.</strong> Export played tickets → Upload to GitHub manually</p>
                     <p><strong>8.</strong> After draw: Check winners against last draw</p>
                 </div>
                 
@@ -532,7 +544,7 @@
                 bonusCount: 1,
                 bonusMax: 49,
                 totalCombos: {3: 18424, 4: 211876, 5: 1906884},
-                hasBonus: true // Will be set per country
+                hasBonus: true
             },
             'euromillions': {
                 mainMax: 50,
@@ -651,11 +663,12 @@
                            (currentCountry === 'Canada' ? 'a_649_CA.txt' : 'a_649_RO.txt');
             document.getElementById('currentFile').textContent = fileName;
             
-            // Update number inputs
+            // Update number inputs - FIX: Romania should have 6 numbers
             const mainGrid = document.getElementById('mainNumbersGrid');
-            mainGrid.className = isEuro ? 'number-grid' : 'number-grid';
+            mainGrid.className = 'number-grid';
             mainGrid.innerHTML = '';
-            for (let i = 1; i <= (isEuro ? 5 : 6); i++) {
+            const numCount = isEuro ? 5 : 6; // 6/49 always has 6 numbers regardless of country
+            for (let i = 1; i <= numCount; i++) {
                 const input = document.createElement('input');
                 input.type = 'number';
                 input.id = `n${i}`;
@@ -725,7 +738,7 @@
         
         function updateBonusSection() {
             const config = GAME_CONFIGS[currentGame];
-            const hasBonus = config.hasBonus;
+            const hasBonus = currentCountry !== 'Romania'; // Romania has no bonus
             const bonusSection = document.getElementById('bonusSection');
             
             if (currentGame === 'euromillions') {
@@ -748,6 +761,7 @@
             updateComboTotals();
             updateComboTracking();
             updateUI();
+            saveSettings();
         }
         
         function updateComboTotals() {
@@ -762,6 +776,7 @@
         function updateSeed() {
             randomSeed = parseInt(document.getElementById('randomSeed').value) || 12345;
             rng.setSeed(randomSeed);
+            saveSettings();
         }
         
         function getCombos(numbers, size) {
@@ -1084,6 +1099,12 @@
             
             results.sort((a, b) => b.undrawn - a.undrawn);
             generated = results;
+            
+            // Auto-save to Play file
+            if (results.length > 0) {
+                savePlayFileToLocalStorage(results);
+            }
+            
             updateUI();
             
             const distText = useDistance ? 
@@ -1095,7 +1116,7 @@
             } else if (results.length < numTickets) {
                 alert(`⚠️ Generated ${results.length} tickets (wanted ${numTickets})\n\nSeed: ${randomSeed}\n${distText}\nHoles: ${holeMin}-${holeMax}\nOdd: ${oddMin}-${oddMax}`);
             } else {
-                alert(`✅ Generated ${results.length} tickets\n\nSeed: ${randomSeed}\n${distText}\nCombo: ${comboSize}-combos`);
+                alert(`✅ Generated ${results.length} tickets\n\nSeed: ${randomSeed}\n${distText}\nCombo: ${comboSize}-combos\n\nPlay file saved to browser storage!`);
             }
         }
         
@@ -1278,12 +1299,40 @@
             }
             
             const isEuro = currentGame === 'euromillions';
-            const fileName = isEuro ? '550_played.txt' : '649_played.txt';
+            let fileName;
+            
+            // Determine file name based on game and country
+            if (isEuro) {
+                fileName = 'Play_EU.txt';
+            } else if (currentCountry === 'Romania') {
+                fileName = 'Play_RO.txt';
+            } else if (currentCountry === 'Canada') {
+                fileName = 'Play_CA.txt';
+            } else {
+                fileName = 'Play_649.txt';
+            }
+            
+            const content = generatePlayFileContent();
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            
+            alert(`✅ Exported ${generated.length} tickets to ${fileName}`);
+        }
+        
+        function generatePlayFileContent() {
+            const isEuro = currentGame === 'euromillions';
             
             let content = `# Played Tickets - ${currentGame === 'euromillions' ? 'EuroMillions' : '6/49'}\n`;
+            content += `# Country: ${currentCountry}\n`;
             content += `# Generated: ${new Date().toISOString().split('T')[0]}\n`;
             content += `# Total tickets: ${generated.length}\n`;
             content += `# Seed: ${randomSeed}\n`;
+            content += `# Combo Strategy: ${comboSize}-combos\n`;
             content += `#\n`;
             
             if (isEuro) {
@@ -1297,18 +1346,41 @@
                 content += `# Format: N1, N2, N3, N4, N5, N6 / Bonus\n#\n`;
                 generated.forEach((ticket, i) => {
                     const nums = ticket.numbers.map(n => String(n).padStart(2, ' ')).join(', ');
-                    content += `${nums} / ${ticket.bonuses[0]}\n`;
+                    const bonusStr = ticket.bonuses.length > 0 ? ` / ${ticket.bonuses[0]}` : '';
+                    content += `${nums}${bonusStr}\n`;
                 });
             }
             
-            const blob = new Blob([content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileName;
-            a.click();
-            
-            alert(`✅ Exported ${generated.length} tickets to ${fileName}`);
+            return content;
+        }
+        
+        function savePlayFileToLocalStorage(tickets) {
+            try {
+                const isEuro = currentGame === 'euromillions';
+                let fileName;
+                
+                // Determine file name based on game and country
+                if (isEuro) {
+                    fileName = 'Play_EU.txt';
+                } else if (currentCountry === 'Romania') {
+                    fileName = 'Play_RO.txt';
+                } else if (currentCountry === 'Canada') {
+                    fileName = 'Play_CA.txt';
+                } else {
+                    fileName = 'Play_649.txt';
+                }
+                
+                const content = generatePlayFileContent();
+                
+                // Save to localStorage as backup
+                localStorage.setItem(`playFile_${fileName}`, content);
+                
+                console.log(`✅ Play file ${fileName} prepared with ${tickets.length} tickets`);
+                console.log('File saved to browser localStorage.');
+                
+            } catch (error) {
+                console.error('Error preparing play file:', error);
+            }
         }
         
         function autoLoadFromGitHub() {
@@ -1346,6 +1418,10 @@
                     // Fix old format data (migrate bonus to bonuses array)
                     if (data.draws) {
                         draws = data.draws.map(d => {
+                            // Romania has no bonus, keep bonuses as empty array
+                            if (currentCountry === 'Romania' || data.country === 'Romania') {
+                                return {...d, bonuses: []};
+                            }
                             if (d.bonus !== undefined && !d.bonuses) {
                                 return {...d, bonuses: [d.bonus]};
                             }
@@ -1432,6 +1508,10 @@
                     // Fix old format data (migrate bonus to bonuses array)
                     if (data.draws) {
                         draws = data.draws.map(d => {
+                            // Romania has no bonus, keep bonuses as empty array
+                            if (currentCountry === 'Romania' || data.country === 'Romania') {
+                                return {...d, bonuses: []};
+                            }
                             if (d.bonus !== undefined && !d.bonuses) {
                                 return {...d, bonuses: [d.bonus]};
                             }
@@ -1539,20 +1619,22 @@
                     const numbers = d.numbers || [];
                     const bonusArray = d.bonuses || [];
                     
-                    html += '<div class="draw-item" style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">';
-                    html += '<div style="display: flex; align-items: center; gap: 15px; flex: 1;">';
-                    html += `<div style="font-size: 13px; color: #666; min-width: 100px;">${d.date}</div>`;
-                    html += '<div style="display: flex; gap: 6px; align-items: center;">';
+                    html += '<div class="draw-item">';
+                    html += '<div class="draw-content">';
+                    html += `<div class="draw-date">${d.date}</div>`;
+                    html += '<div class="draw-numbers">';
                     
                     // Main numbers
                     for (let j = 0; j < numbers.length; j++) {
-                        html += `<div style="width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">${numbers[j]}</div>`;
+                        html += `<div class="draw-ball">${numbers[j]}</div>`;
                     }
                     
-                    // Bonus/Stars
-                    for (let k = 0; k < bonusArray.length; k++) {
-                        const bgColor = isEuro ? '#f59e0b' : '#dc2626';
-                        html += `<div style="width: 32px; height: 32px; background: ${bgColor}; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;">${bonusArray[k]}</div>`;
+                    // Bonus/Stars - only show if exists and not Romania
+                    if (bonusArray && bonusArray.length > 0 && currentCountry !== 'Romania') {
+                        for (let k = 0; k < bonusArray.length; k++) {
+                            const className = isEuro ? 'draw-ball star' : 'draw-ball bonus';
+                            html += `<div class="${className}">${bonusArray[k]}</div>`;
+                        }
                     }
                     
                     html += '</div></div>';
@@ -1561,9 +1643,7 @@
                 }
                 
                 document.getElementById('drawsList').innerHTML = html;
-                console.log('Rendered', draws.length, 'draws with inline styles');
             } else {
-                console.log('No draws to display');
                 document.getElementById('drawsCard').style.display = 'none';
             }
             
