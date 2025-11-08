@@ -192,7 +192,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎰 Multi-Game Lottery Command Center v51</h1>
+            <h1>🎰 Multi-Game Lottery Command Center v51_13</h1>
             <p>6/49, EuroMillions (5/50+2/12) - Advanced combo analysis and generation</p>
         </div>
         
@@ -470,18 +470,24 @@
                     <h3>✨ Understanding Generated Tickets</h3>
                     <p><strong>Display Format:</strong> #N | Undrawn X-combos: A/B | Dist: C | H: D | O: E</p>
                     
+                    <p><strong>Sorting Priority:</strong> Tickets are sorted by most favorable first:</p>
+                    <p>• <strong>1st Priority:</strong> Highest undrawn combos (A value)</p>
+                    <p>• <strong>2nd Priority:</strong> Highest minimum distance from all historical draws</p>
+                    <p>• <strong>3rd Priority:</strong> Lowest holes (better coverage)</p>
+                    
                     <p><strong>#N:</strong> Ticket number (1-100)</p>
                     
                     <p><strong>Undrawn X-combos: A/B:</strong></p>
                     <p>• <strong>X:</strong> Combo strategy you selected (3, 4, or 5)</p>
                     <p>• <strong>A:</strong> How many X-number combos in this ticket are UNDRAWN (never appeared in history)</p>
                     <p>• <strong>B:</strong> Total possible X-number combos in this ticket</p>
-                    <p>• <strong>Example "Undrawn 3-combos: 8/10":</strong></p>
-                    <p>&nbsp;&nbsp;- This ticket contains 10 different 3-number combinations</p>
-                    <p>&nbsp;&nbsp;- 8 of them have NEVER appeared in any historical draw</p>
-                    <p>&nbsp;&nbsp;- 2 of them HAVE appeared before</p>
+                    <p>• <strong>Example "Undrawn 4-combos: 12/15":</strong></p>
+                    <p>&nbsp;&nbsp;- This ticket contains 15 different 4-number combinations</p>
+                    <p>&nbsp;&nbsp;- 12 of them have NEVER appeared in any historical draw</p>
+                    <p>&nbsp;&nbsp;- 3 of them HAVE appeared before</p>
                     <p>• <strong>Why it matters:</strong> Higher A = more "fresh" combinations that haven't been drawn</p>
                     <p>• <strong>Best tickets:</strong> Highest A/B ratio (e.g., 15/15 = all undrawn!)</p>
+                    <p>• <strong>IMPORTANT:</strong> 4-Combo strategy does NOT mean tickets will match 4 numbers! It means we're tracking which 4-number combinations have been drawn. A ticket can still match 3, 4, 5, or 6 numbers in the actual draw.</p>
                     
                     <p><strong>Dist: C:</strong> Minimum distance from ALL historical draws</p>
                     <p>• Shows how different this ticket is from every draw in history</p>
@@ -1097,7 +1103,23 @@
                 });
             }
             
-            results.sort((a, b) => b.undrawn - a.undrawn);
+            results.sort((a, b) => {
+                // Sort by: 1) Undrawn combos (highest first), 2) Distance (highest first), 3) Holes (lowest first)
+                if (b.undrawn !== a.undrawn) return b.undrawn - a.undrawn;
+                
+                // Calculate min distance for each
+                let minDistA = 100, minDistB = 100;
+                draws.forEach(draw => {
+                    const distA = calculateDistance(a.numbers, draw.numbers);
+                    const distB = calculateDistance(b.numbers, draw.numbers);
+                    if (distA < minDistA) minDistA = distA;
+                    if (distB < minDistB) minDistB = distB;
+                });
+                
+                if (minDistB !== minDistA) return minDistB - minDistA;
+                return a.holes - b.holes; // Lower holes is better
+            });
+            
             generated = results;
             
             // Auto-save to Play file
@@ -1609,7 +1631,7 @@
                 document.getElementById('generatedCard').style.display = 'none';
             }
             
-            // Update draws list
+            // Update draws list - FIX: Always show draws regardless of bonus
             if (draws.length > 0) {
                 document.getElementById('drawsCard').style.display = 'block';
                 
@@ -1624,17 +1646,17 @@
                     html += `<div class="draw-date">${d.date}</div>`;
                     html += '<div class="draw-numbers">';
                     
-                    // Main numbers
-                    for (let j = 0; j < numbers.length; j++) {
-                        html += `<div class="draw-ball">${numbers[j]}</div>`;
-                    }
+                    // Main numbers - always show
+                    numbers.forEach(num => {
+                        html += `<div class="draw-ball">${num}</div>`;
+                    });
                     
-                    // Bonus/Stars - only show if exists and not Romania
-                    if (bonusArray && bonusArray.length > 0 && currentCountry !== 'Romania') {
-                        for (let k = 0; k < bonusArray.length; k++) {
+                    // Bonus/Stars - show if exists
+                    if (bonusArray.length > 0) {
+                        bonusArray.forEach(bonus => {
                             const className = isEuro ? 'draw-ball star' : 'draw-ball bonus';
-                            html += `<div class="${className}">${bonusArray[k]}</div>`;
-                        }
+                            html += `<div class="${className}">${bonus}</div>`;
+                        });
                     }
                     
                     html += '</div></div>';
@@ -1643,6 +1665,7 @@
                 }
                 
                 document.getElementById('drawsList').innerHTML = html;
+                console.log(`Rendered ${draws.length} draws for ${currentCountry}`);
             } else {
                 document.getElementById('drawsCard').style.display = 'none';
             }
