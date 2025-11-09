@@ -11,14 +11,50 @@
 <div class="container">
 <div class="header">
 <h1>🎰 Lottery v52</h1>
-<div style="margin-top:15px;padding:15px;background:#f0f9ff;border-radius:8px;border-left:4px solid #3b82f6">
-<h3 style="margin-bottom:10px;color:#1e40af">📖 Quick Guide</h3>
+<button class="bi" onclick="sg()" style="width:auto;padding:10px 20px;margin-top:10px">📖 Show Guide</button>
+<div id="gd" style="display:none;margin-top:15px;padding:15px;background:#f0f9ff;border-radius:8px;border-left:4px solid #3b82f6">
+<h3 style="margin-bottom:15px;color:#1e40af">📖 Detailed Guide</h3>
+
+<h4 style="margin-top:15px;margin-bottom:8px;color:#1e40af">🎮 Game Section</h4>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Game Type:</strong> Select 6/49 or EuroMillions lottery format</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Country:</strong> Choose Canada, Romania, or Europe (auto-set for EuroMillions)</p>
 <p style="margin-bottom:8px;line-height:1.6"><strong>🔄 Load:</strong> Auto-loads JSON data from GitHub (lottery-data-*.json files)</p>
-<p style="margin-bottom:8px;line-height:1.6"><strong>📥 Import:</strong> Use quick buttons (🇨🇦 CA v2, 🇷🇴 RO v2, 🇪🇺 EU v2) to load v2 Latest files, or paste manually</p>
-<p style="margin-bottom:8px;line-height:1.6"><strong>📅 Add:</strong> Manually add individual draws with date and numbers</p>
-<p style="margin-bottom:8px;line-height:1.6"><strong>🎲 Generate:</strong> Create lottery tickets based on your strategy (needs 10+ draws)</p>
-<p style="margin-bottom:8px;line-height:1.6"><strong>🎯 Check:</strong> Check your generated tickets against the last draw</p>
-<p style="line-height:1.6"><strong>💾 Export:</strong> Save play tickets (.txt) or full data (.json), or copy JSON to clipboard</p>
+
+<h4 style="margin-top:15px;margin-bottom:8px;color:#1e40af">⚙️ Strategy Section</h4>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Combo Size (3/4/5):</strong> Number of numbers to group together for tracking. Affects how combinations are counted and analyzed</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Seed:</strong> Random number generator seed for reproducible results. Same seed = same tickets generated</p>
+
+<h4 style="margin-top:15px;margin-bottom:8px;color:#1e40af">📥 Import Section</h4>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Quick Buttons (🇨🇦/🇷🇴/🇪🇺):</strong> Load v2 Latest files directly from GitHub. Format: YYMMDD:num1,num2.../bonus</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Manual Import:</strong> Paste text data in the format above and click Import</p>
+
+<h4 style="margin-top:15px;margin-bottom:8px;color:#1e40af">🎲 Generate Section</h4>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Number of Tickets:</strong> How many lottery tickets to generate (default: 100)</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Distance Filter:</strong> Ensures generated tickets differ from past draws by exactly X numbers (0 = no filter, 3 or 4 recommended)</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Compare Draws:</strong> How many recent draws to compare against (Last 10/20/50 or All)</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Holes (Min/Max):</strong> Number of "gaps" between numbers. A hole = when numbers are more than 2 apart. Example: [1,2,5,6] has 1 hole between 2 and 5</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Odd Numbers (Min/Max):</strong> How many odd numbers each ticket should contain (e.g., 2-4 means between 2 and 4 odd numbers)</p>
+
+<h4 style="margin-top:15px;margin-bottom:8px;color:#1e40af">🎯 Check Section</h4>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Check Button:</strong> Compares all generated tickets against the most recent draw and shows winners by prize tier</p>
+
+<h4 style="margin-top:15px;margin-bottom:8px;color:#1e40af">💾 Export Section</h4>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Play:</strong> Downloads a text file with all generated tickets for playing</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Data:</strong> Downloads complete JSON file with all draws and tickets for backup</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Import:</strong> Load a previously saved JSON file from your computer</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>📋 Copy JSON:</strong> Copies current data as JSON to clipboard for pasting to GitHub</p>
+
+<h4 style="margin-top:15px;margin-bottom:8px;color:#1e40af">📊 Statistics</h4>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Draws:</strong> Total number of lottery draws loaded</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Total:</strong> Total possible combinations for selected combo size</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Drawn:</strong> How many combinations have appeared in past draws</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Remain:</strong> Combinations never seen before (higher = more unexplored territory)</p>
+
+<h4 style="margin-top:15px;margin-bottom:8px;color:#1e40af">✨ Ticket Info</h4>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Undrawn X:</strong> How many of this ticket's combos have never appeared / total combos in ticket</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>Dist:</strong> Minimum distance to any past draw (higher = more different from history)</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>H:</strong> Number of holes (gaps) in the ticket</p>
+<p style="margin-bottom:8px;line-height:1.6"><strong>O:</strong> Number of odd numbers in the ticket</p>
 </div>
 </div>
 <div class="main-grid">
@@ -107,6 +143,7 @@ function al(){const st=document.getElementById('ls');st.textContent='⏳ Loading
 function ed(){const e=g==='em',fn=e?'lottery-data-Europe.json':'lottery-data-'+c+'.json',dt={game:g==='em'?'euromillions':'649',country:c,comboSize:z,seed:s,draws:D.map(d=>({date:d.dt,numbers:d.nu,bonuses:d.bo})),generated:T.map(t=>({numbers:t.nu,bonuses:t.bo,undrawn:t.u,total:t.t,holes:t.h,odd:t.o,minDist:t.md}))},bl=new Blob([JSON.stringify(dt,null,2)],{type:'application/json'}),ur=URL.createObjectURL(bl),a=document.createElement('a');a.href=ur;a.download=fn;a.click();alert('✅ '+fn)}
 function id(){const f=document.getElementById('fi').files[0];if(!f)return;const r=new FileReader();r.onload=e=>{try{const dt=JSON.parse(e.target.result);if(dt.game){if(dt.game==='euromillions')g='em';else g='649'}if(dt.country)c=dt.country;if(dt.comboSize)z=dt.comboSize;if(dt.seed){s=dt.seed;rng.s=s;document.getElementById('sd').value=s}if(dt.draws)D=dt.draws.map(d=>({dt:d.date||'',nu:d.numbers||[],bo:d.bonuses||(d.bonus?[d.bonus]:[])})).filter(d=>d.nu.length>0);if(dt.generated)T=dt.generated.map(x=>({nu:x.numbers||[],bo:x.bonuses||(x.bonus?[x.bonus]:[]),u:x.undrawn||x.u||0,t:x.total||x.t||0,h:x.holes||0,o:x.odd||0,md:x.minDist||0}));document.getElementById('gt').value=g;document.getElementById('cz').value=z;uC();ui();alert('✅ Imported')}catch(e){alert('❌ Invalid')}};r.readAsText(f);document.getElementById('fi').value=''}
 function cj(){const e=g==='em',fn=e?'lottery-data-Europe.json':'lottery-data-'+c+'.json',dt={game:g==='em'?'euromillions':'649',country:c,comboSize:z,seed:s,draws:D.map(d=>({date:d.dt,numbers:d.nu,bonuses:d.bo})),generated:T.map(t=>({numbers:t.nu,bonuses:t.bo,undrawn:t.u,total:t.t,holes:t.h,odd:t.o,minDist:t.md}))},tx=JSON.stringify(dt,null,2);navigator.clipboard.writeText(tx).then(()=>alert('✅ JSON copied to clipboard!\n\nYou can now paste it into the GitHub file.')).catch(()=>{const ta=document.createElement('textarea');ta.value=tx;ta.style.position='fixed';ta.style.top='0';ta.style.left='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);alert('✅ JSON copied to clipboard!\n\nYou can now paste it into the GitHub file.')})}
+function sg(){const gd=document.getElementById('gd');if(gd.style.display==='none'){gd.style.display='block';event.target.textContent='📖 Hide Guide'}else{gd.style.display='none';event.target.textContent='📖 Show Guide'}}
 ui();
 </script>
 </body>
