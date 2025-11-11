@@ -1,7 +1,7 @@
 {
   "game": "euromillions",
   "country": "Europe",
-  "comboSize": 3,
+  "comboSize": 4,
   "seed": 12345,
   "draws": [
     {
@@ -5244,1803 +5244,1803 @@
   "generated": [
     {
       "numbers": [
-        13,
-        15,
-        19,
+        23,
+        25,
+        32,
         33,
         35
       ],
       "bonuses": [
-        1,
-        3
+        3,
+        5
       ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 2,
-      "odd": 5,
-      "minDist": 0
+      "undrawn": 5,
+      "total": 5,
+      "holes": 1,
+      "odd": 4,
+      "minDist": 3
     },
     {
       "numbers": [
-        10,
-        34,
-        46,
-        48,
+        27,
+        38,
+        39,
+        41,
         49
       ],
       "bonuses": [
-        8,
-        12
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 2,
-      "odd": 1,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        24,
-        25,
-        27,
-        34,
-        46
-      ],
-      "bonuses": [
-        3,
-        11
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 2,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        1,
-        12,
-        14,
-        18,
-        21
-      ],
-      "bonuses": [
-        3,
-        9
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        5,
-        15,
-        21,
-        29,
-        30
-      ],
-      "bonuses": [
-        3,
-        4
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        10,
-        17,
-        39,
-        44,
-        45
-      ],
-      "bonuses": [
         4,
-        6
+        8
       ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        1,
-        25,
-        30,
-        33,
-        35
-      ],
-      "bonuses": [
-        1,
-        11
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
       "odd": 4,
-      "minDist": 0
+      "minDist": 3
     },
     {
       "numbers": [
-        14,
-        27,
-        32,
-        39,
-        41
-      ],
-      "bonuses": [
-        4,
-        7
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        17,
-        22,
-        28,
-        29,
-        32
-      ],
-      "bonuses": [
-        5,
-        6
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        6,
-        8,
-        19,
-        44,
-        47
-      ],
-      "bonuses": [
         3,
-        7
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        18,
-        22,
-        31,
-        32,
-        41
-      ],
-      "bonuses": [
-        8,
-        9
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        6,
-        7,
-        11,
-        33,
-        46
-      ],
-      "bonuses": [
-        1,
-        2
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        2,
-        7,
-        9,
-        31,
-        39
-      ],
-      "bonuses": [
-        2,
-        3
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        1,
-        7,
-        13,
-        15,
-        22
-      ],
-      "bonuses": [
         5,
-        6
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        6,
-        28,
-        30,
-        37,
-        48
-      ],
-      "bonuses": [
-        1,
-        9
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 1,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        7,
-        20,
-        35,
         36,
-        39
+        37,
+        46
       ],
       "bonuses": [
-        11,
+        9,
         12
       ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        1,
-        8,
-        21,
-        22,
-        42
-      ],
-      "bonuses": [
-        3,
-        8
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        13,
-        19,
-        43,
-        48,
-        50
-      ],
-      "bonuses": [
-        2,
-        4
-      ],
-      "undrawn": 10,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        14,
-        15,
-        17,
-        26,
-        27
-      ],
-      "bonuses": [
-        4,
-        7
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 1,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        10,
-        14,
-        16,
-        18,
-        41
-      ],
-      "bonuses": [
-        4,
-        8
-      ],
-      "undrawn": 9,
-      "total": 10,
+      "undrawn": 5,
+      "total": 5,
       "holes": 2,
-      "odd": 1,
-      "minDist": 0
+      "odd": 3,
+      "minDist": 3
     },
     {
       "numbers": [
-        10,
-        30,
-        32,
-        34,
-        47
-      ],
-      "bonuses": [
-        7,
-        12
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 2,
-      "odd": 1,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        5,
         33,
-        35,
+        38,
+        42,
         43,
         44
       ],
       "bonuses": [
-        1,
-        2
+        2,
+        9
       ],
-      "undrawn": 9,
-      "total": 10,
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 3
+    },
+    {
+      "numbers": [
+        12,
+        13,
+        15,
+        27,
+        35
+      ],
+      "bonuses": [
+        6,
+        9
+      ],
+      "undrawn": 5,
+      "total": 5,
       "holes": 2,
       "odd": 4,
-      "minDist": 0
+      "minDist": 3
     },
     {
       "numbers": [
-        1,
-        19,
-        27,
-        29,
-        31
-      ],
-      "bonuses": [
-        1,
-        10
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 2,
-      "odd": 5,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        10,
-        11,
-        19,
-        21,
-        24
-      ],
-      "bonuses": [
-        9,
-        10
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 2,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        13,
-        17,
-        19,
-        20,
-        24
+        7,
+        39,
+        40,
+        46,
+        48
       ],
       "bonuses": [
         2,
         3
       ],
-      "undrawn": 9,
-      "total": 10,
+      "undrawn": 5,
+      "total": 5,
       "holes": 2,
-      "odd": 3,
-      "minDist": 0
+      "odd": 2,
+      "minDist": 3
     },
     {
       "numbers": [
-        1,
-        2,
-        12,
+        4,
         17,
-        34
-      ],
-      "bonuses": [
-        6,
-        9
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        4,
-        13,
-        14,
-        19,
-        25
-      ],
-      "bonuses": [
-        3,
-        10
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        5,
-        29,
-        32,
-        36,
-        37
-      ],
-      "bonuses": [
-        4,
-        8
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        4,
-        32,
-        35,
-        47,
-        49
-      ],
-      "bonuses": [
-        3,
-        11
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        4,
-        7,
-        29,
-        30,
-        50
-      ],
-      "bonuses": [
-        4,
-        5
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        6,
         18,
-        26,
-        27,
+        20,
         41
       ],
       "bonuses": [
-        11,
+        3,
         12
       ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
       "odd": 2,
-      "minDist": 0
+      "minDist": 3
     },
     {
       "numbers": [
-        10,
         15,
-        33,
-        34,
-        41
+        20,
+        46,
+        47,
+        48
       ],
       "bonuses": [
-        4,
+        1,
         6
       ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        13,
-        23,
-        26,
-        34,
-        36
-      ],
-      "bonuses": [
-        2,
-        9
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
       "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        3,
-        18,
-        29,
-        30,
-        49
-      ],
-      "bonuses": [
-        10,
-        12
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        3,
-        10,
-        14,
-        16,
-        47
-      ],
-      "bonuses": [
-        3,
-        11
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        17,
-        18,
-        23,
-        27,
-        34
-      ],
-      "bonuses": [
-        4,
-        11
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
+      "minDist": 3
     },
     {
       "numbers": [
         5,
         17,
-        35,
-        36,
-        41
-      ],
-      "bonuses": [
-        6,
-        8
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        3,
-        9,
-        29,
-        45,
-        46
-      ],
-      "bonuses": [
-        3,
-        4
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        5,
-        31,
-        35,
-        37,
-        48
-      ],
-      "bonuses": [
-        6,
-        7
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        6,
         18,
-        19,
-        30,
-        35
-      ],
-      "bonuses": [
-        11,
-        12
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        3,
-        24,
-        27,
-        38,
-        39
-      ],
-      "bonuses": [
-        4,
-        5
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        8,
-        10,
-        22,
-        31,
-        37
-      ],
-      "bonuses": [
-        4,
-        8
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        1,
-        2,
-        6,
-        34,
-        38
-      ],
-      "bonuses": [
-        1,
-        12
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 1,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        5,
-        8,
-        19,
-        21,
-        41
-      ],
-      "bonuses": [
-        4,
-        5
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        4,
-        17,
-        22,
-        23,
-        35
-      ],
-      "bonuses": [
-        10,
-        11
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        15,
-        22,
-        43,
-        46,
-        48
-      ],
-      "bonuses": [
-        4,
-        12
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        15,
-        16,
         20,
-        43,
-        48
-      ],
-      "bonuses": [
-        4,
-        9
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        10,
-        18,
-        45,
-        46,
-        49
-      ],
-      "bonuses": [
-        3,
-        10
-      ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        3,
-        17,
-        24,
-        29,
         31
       ],
       "bonuses": [
-        3,
-        5
+        5,
+        8
       ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 3
     },
     {
       "numbers": [
-        5,
         10,
         11,
-        21,
-        39
+        12,
+        17,
+        45
+      ],
+      "bonuses": [
+        7,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 3
+    },
+    {
+      "numbers": [
+        32,
+        33,
+        41,
+        47,
+        48
       ],
       "bonuses": [
         4,
-        9
+        11
       ],
-      "undrawn": 9,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 3
     },
     {
       "numbers": [
-        16,
+        1,
+        2,
+        3,
         26,
+        29
+      ],
+      "bonuses": [
+        1,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 3
+    },
+    {
+      "numbers": [
+        8,
+        21,
         37,
         38,
         40
       ],
       "bonuses": [
         1,
-        7
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 2,
-      "odd": 1,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        3,
-        15,
-        31,
-        33,
-        34
-      ],
-      "bonuses": [
-        5,
-        8
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 2,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        14,
-        16,
-        22,
-        33,
-        34
-      ],
-      "bonuses": [
-        3,
         9
       ],
-      "undrawn": 8,
-      "total": 10,
+      "undrawn": 5,
+      "total": 5,
       "holes": 2,
-      "odd": 1,
-      "minDist": 0
+      "odd": 2,
+      "minDist": 3
     },
     {
       "numbers": [
-        1,
-        7,
-        9,
-        10,
-        25
-      ],
-      "bonuses": [
-        5,
-        12
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 2,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        13,
-        14,
-        18,
+        17,
         19,
-        39
-      ],
-      "bonuses": [
-        7,
-        9
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 2,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        1,
-        13,
-        14,
-        15,
+        20,
+        25,
         31
       ],
       "bonuses": [
-        8,
-        10
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 2,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        25,
-        42,
-        45,
-        46,
-        48
-      ],
-      "bonuses": [
-        4,
+        9,
         11
       ],
-      "undrawn": 8,
-      "total": 10,
+      "undrawn": 5,
+      "total": 5,
       "holes": 2,
-      "odd": 2,
-      "minDist": 0
+      "odd": 4,
+      "minDist": 3
     },
     {
       "numbers": [
-        9,
-        15,
-        16,
-        21,
-        23
-      ],
-      "bonuses": [
         10,
-        11
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 2,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        9,
         11,
-        12,
-        28,
-        36
-      ],
-      "bonuses": [
-        5,
-        6
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 2,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        25,
-        31,
+        38,
         40,
-        42,
-        43
-      ],
-      "bonuses": [
-        4,
-        7
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 2,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        2,
-        9,
-        10,
-        38,
-        47
-      ],
-      "bonuses": [
-        2,
-        3
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        15,
-        20,
-        44,
-        46,
         49
-      ],
-      "bonuses": [
-        8,
-        12
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        10,
-        13,
-        24,
-        30,
-        32
-      ],
-      "bonuses": [
-        7,
-        11
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 1,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        11,
-        32,
-        35,
-        37,
-        49
-      ],
-      "bonuses": [
-        8,
-        11
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        4,
-        7,
-        25,
-        44,
-        45
-      ],
-      "bonuses": [
-        3,
-        11
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        24,
-        27,
-        29,
-        43,
-        50
-      ],
-      "bonuses": [
-        2,
-        6
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        3,
-        27,
-        38,
-        43,
-        45
-      ],
-      "bonuses": [
-        2,
-        12
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        10,
-        11,
-        16,
-        19,
-        49
-      ],
-      "bonuses": [
-        6,
-        8
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        19,
-        23,
-        32,
-        33,
-        46
-      ],
-      "bonuses": [
-        3,
-        8
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        5,
-        9,
-        16,
-        43,
-        45
-      ],
-      "bonuses": [
-        1,
-        3
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        5,
-        27,
-        36,
-        44,
-        46
-      ],
-      "bonuses": [
-        4,
-        5
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        1,
-        11,
-        17,
-        40,
-        41
-      ],
-      "bonuses": [
-        6,
-        11
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        3,
-        6,
-        13,
-        15,
-        31
-      ],
-      "bonuses": [
-        1,
-        7
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        9,
-        10,
-        21,
-        35,
-        48
-      ],
-      "bonuses": [
-        2,
-        8
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        4,
-        11,
-        12,
-        20,
-        43
-      ],
-      "bonuses": [
-        2,
-        7
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        2,
-        11,
-        19,
-        23,
-        24
-      ],
-      "bonuses": [
-        4,
-        7
-      ],
-      "undrawn": 8,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        3,
-        19,
-        21,
-        26,
-        27
-      ],
-      "bonuses": [
-        2,
-        9
-      ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 2,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        18,
-        20,
-        25,
-        36,
-        44
-      ],
-      "bonuses": [
-        2,
-        3
-      ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
-      "odd": 1,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        3,
-        4,
-        14,
-        27,
-        32
-      ],
-      "bonuses": [
-        3,
-        6
-      ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        12,
-        17,
-        25,
-        33,
-        34
-      ],
-      "bonuses": [
-        6,
-        9
-      ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        20,
-        34,
-        38,
-        39,
-        43
       ],
       "bonuses": [
         3,
         4
       ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
       "odd": 2,
-      "minDist": 0
+      "minDist": 3
     },
     {
       "numbers": [
-        13,
-        25,
-        28,
-        40,
-        41
-      ],
-      "bonuses": [
-        2,
-        6
-      ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        22,
-        28,
-        33,
-        47,
-        49
-      ],
-      "bonuses": [
-        6,
-        10
-      ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        7,
-        14,
-        24,
-        26,
-        47
-      ],
-      "bonuses": [
+        8,
         9,
-        10
-      ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        4,
-        27,
-        44,
-        47,
-        48
-      ],
-      "bonuses": [
-        6,
-        12
-      ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        13,
         15,
-        25,
-        45,
-        50
+        16,
+        24
       ],
       "bonuses": [
         1,
-        10
+        2
       ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 3
     },
     {
       "numbers": [
         16,
-        23,
-        26,
-        38,
-        39
+        17,
+        27,
+        44,
+        46
       ],
       "bonuses": [
-        2,
-        5
+        6,
+        7
       ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
       "odd": 2,
-      "minDist": 0
+      "minDist": 3
     },
     {
       "numbers": [
-        4,
-        8,
-        13,
         14,
-        45
-      ],
-      "bonuses": [
-        5,
-        10
-      ],
-      "undrawn": 7,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        2,
-        4,
-        9,
-        11,
-        33
-      ],
-      "bonuses": [
-        2,
-        12
-      ],
-      "undrawn": 6,
-      "total": 10,
-      "holes": 2,
-      "odd": 3,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        1,
-        2,
-        10,
-        18,
-        19
-      ],
-      "bonuses": [
-        3,
-        12
-      ],
-      "undrawn": 6,
-      "total": 10,
-      "holes": 2,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        11,
-        13,
-        26,
-        35,
+        15,
+        16,
+        20,
         47
       ],
       "bonuses": [
-        8,
-        9
+        5,
+        7
       ],
-      "undrawn": 6,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 3
     },
     {
       "numbers": [
-        9,
-        10,
-        22,
-        36,
-        41
+        17,
+        18,
+        20,
+        43,
+        44
       ],
       "bonuses": [
-        2,
-        6
+        6,
+        9
       ],
-      "undrawn": 6,
-      "total": 10,
-      "holes": 3,
+      "undrawn": 5,
+      "total": 5,
+      "holes": 1,
       "odd": 2,
-      "minDist": 0
+      "minDist": 2
     },
     {
       "numbers": [
-        4,
-        21,
-        31,
-        33,
+        15,
+        44,
+        46,
+        48,
         49
       ],
       "bonuses": [
-        4,
-        10
-      ],
-      "undrawn": 6,
-      "total": 10,
-      "holes": 3,
-      "odd": 4,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        6,
-        37,
-        38,
-        42,
-        47
-      ],
-      "bonuses": [
         2,
-        9
-      ],
-      "undrawn": 6,
-      "total": 10,
-      "holes": 3,
-      "odd": 2,
-      "minDist": 0
-    },
-    {
-      "numbers": [
-        10,
-        20,
-        41,
-        43,
-        50
-      ],
-      "bonuses": [
-        4,
         6
       ],
-      "undrawn": 6,
-      "total": 10,
-      "holes": 3,
+      "undrawn": 5,
+      "total": 5,
+      "holes": 1,
       "odd": 2,
-      "minDist": 0
+      "minDist": 2
     },
     {
       "numbers": [
-        21,
-        22,
-        28,
-        37,
+        26,
+        27,
+        29,
+        31,
         43
       ],
       "bonuses": [
-        6,
-        10
+        4,
+        11
       ],
-      "undrawn": 6,
-      "total": 10,
-      "holes": 3,
-      "odd": 3,
-      "minDist": 0
+      "undrawn": 5,
+      "total": 5,
+      "holes": 1,
+      "odd": 4,
+      "minDist": 2
     },
     {
       "numbers": [
-        6,
-        15,
-        33,
-        34,
-        48
+        18,
+        20,
+        37,
+        39,
+        40
       ],
       "bonuses": [
-        2,
+        7,
         10
       ],
-      "undrawn": 6,
-      "total": 10,
-      "holes": 3,
+      "undrawn": 5,
+      "total": 5,
+      "holes": 1,
       "odd": 2,
-      "minDist": 0
+      "minDist": 2
     },
     {
       "numbers": [
-        6,
+        18,
+        19,
+        21,
+        43,
+        45
+      ],
+      "bonuses": [
+        1,
+        6
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 1,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        23,
+        24,
+        26,
+        48,
+        49
+      ],
+      "bonuses": [
         8,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 1,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        5,
+        29,
+        31,
+        36,
+        37
+      ],
+      "bonuses": [
+        1,
+        4
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        5,
+        33,
+        35,
+        43,
+        44
+      ],
+      "bonuses": [
+        1,
+        2
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        2,
+        3,
+        9,
+        10,
+        18
+      ],
+      "bonuses": [
+        1,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
         14,
-        47,
-        50
+        15,
+        17,
+        26,
+        30
+      ],
+      "bonuses": [
+        1,
+        6
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        3,
+        15,
+        31,
+        33,
+        34
+      ],
+      "bonuses": [
+        5,
+        8
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        3,
+        5,
+        29,
+        30,
+        44
       ],
       "bonuses": [
         5,
         12
       ],
       "undrawn": 5,
-      "total": 10,
-      "holes": 3,
-      "odd": 1,
-      "minDist": 0
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
     },
     {
       "numbers": [
-        6,
-        14,
-        27,
-        48,
-        50
+        10,
+        11,
+        19,
+        21,
+        24
       ],
       "bonuses": [
-        10,
-        12
+        9,
+        10
       ],
       "undrawn": 5,
-      "total": 10,
-      "holes": 3,
-      "odd": 1,
-      "minDist": 0
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
     },
     {
       "numbers": [
-        4,
         17,
-        33,
-        37,
-        39
+        18,
+        22,
+        23,
+        34
       ],
       "bonuses": [
         4,
         7
       ],
       "undrawn": 5,
-      "total": 10,
-      "holes": 3,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        13,
+        14,
+        18,
+        19,
+        44
+      ],
+      "bonuses": [
+        7,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        21,
+        22,
+        23,
+        28,
+        37
+      ],
+      "bonuses": [
+        4,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        4,
+        13,
+        43,
+        44,
+        46
+      ],
+      "bonuses": [
+        2,
+        7
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        1,
+        3,
+        6,
+        13,
+        15
+      ],
+      "bonuses": [
+        7,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
       "odd": 4,
-      "minDist": 0
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        4,
+        9,
+        11,
+        33,
+        34
+      ],
+      "bonuses": [
+        1,
+        2
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        15,
+        43,
+        46,
+        48,
+        49
+      ],
+      "bonuses": [
+        4,
+        7
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        4,
+        12,
+        13,
+        15,
+        19
+      ],
+      "bonuses": [
+        4,
+        5
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        9,
+        11,
+        12,
+        19,
+        36
+      ],
+      "bonuses": [
+        5,
+        7
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        14,
+        15,
+        27,
+        43,
+        45
+      ],
+      "bonuses": [
+        1,
+        3
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        6,
+        17,
+        19,
+        20,
+        24
+      ],
+      "bonuses": [
+        2,
+        3
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        1,
+        2,
+        8,
+        10,
+        15
+      ],
+      "bonuses": [
+        5,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        5,
+        10,
+        11,
+        13,
+        21
+      ],
+      "bonuses": [
+        4,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        25,
+        27,
+        32,
+        34,
+        46
+      ],
+      "bonuses": [
+        3,
+        6
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        1,
+        28,
+        41,
+        43,
+        44
+      ],
+      "bonuses": [
+        2,
+        7
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        15,
+        34,
+        35,
+        41,
+        43
+      ],
+      "bonuses": [
+        6,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        14,
+        27,
+        28,
+        29,
+        40
+      ],
+      "bonuses": [
+        5,
+        11
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        17,
+        18,
+        26,
+        27,
+        42
+      ],
+      "bonuses": [
+        4,
+        5
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        11,
+        29,
+        31,
+        32,
+        49
+      ],
+      "bonuses": [
+        3,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        11,
+        13,
+        15,
+        22,
+        46
+      ],
+      "bonuses": [
+        3,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        12,
+        17,
+        19,
+        48,
+        49
+      ],
+      "bonuses": [
+        1,
+        8
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        12,
+        25,
+        27,
+        47,
+        49
+      ],
+      "bonuses": [
+        7,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        11,
+        12,
+        35,
+        37,
+        40
+      ],
+      "bonuses": [
+        6,
+        11
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        27,
+        28,
+        39,
+        48,
+        49
+      ],
+      "bonuses": [
+        9,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        6,
+        7,
+        18,
+        49,
+        50
+      ],
+      "bonuses": [
+        6,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        19,
+        29,
+        42,
+        44,
+        46
+      ],
+      "bonuses": [
+        6,
+        8
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        20,
+        22,
+        43,
+        45,
+        50
+      ],
+      "bonuses": [
+        5,
+        11
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        10,
+        32,
+        33,
+        35,
+        47
+      ],
+      "bonuses": [
+        3,
+        6
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        10,
+        12,
+        16,
+        17,
+        41
+      ],
+      "bonuses": [
+        4,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        9,
+        11,
+        24,
+        44,
+        45
+      ],
+      "bonuses": [
+        7,
+        9
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        1,
+        8,
+        9,
+        11,
+        31
+      ],
+      "bonuses": [
+        10,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        16,
+        18,
+        35,
+        37,
+        50
+      ],
+      "bonuses": [
+        3,
+        4
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        10,
+        12,
+        21,
+        40,
+        41
+      ],
+      "bonuses": [
+        5,
+        9
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        22,
+        24,
+        29,
+        31,
+        46
+      ],
+      "bonuses": [
+        5,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        7,
+        11,
+        13,
+        14,
+        39
+      ],
+      "bonuses": [
+        5,
+        6
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        11,
+        17,
+        18,
+        19,
+        23
+      ],
+      "bonuses": [
+        1,
+        7
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        3,
+        6,
+        41,
+        43,
+        44
+      ],
+      "bonuses": [
+        7,
+        9
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        4,
+        17,
+        18,
+        20,
+        45
+      ],
+      "bonuses": [
+        1,
+        5
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        16,
+        17,
+        43,
+        46,
+        47
+      ],
+      "bonuses": [
+        4,
+        7
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        4,
+        34,
+        41,
+        42,
+        43
+      ],
+      "bonuses": [
+        5,
+        9
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        8,
+        35,
+        36,
+        37,
+        46
+      ],
+      "bonuses": [
+        9,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        2,
+        19,
+        36,
+        38,
+        39
+      ],
+      "bonuses": [
+        1,
+        3
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        10,
+        12,
+        43,
+        47,
+        49
+      ],
+      "bonuses": [
+        8,
+        9
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        7,
+        9,
+        18,
+        20,
+        25
+      ],
+      "bonuses": [
+        8,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        3,
+        5,
+        26,
+        32,
+        34
+      ],
+      "bonuses": [
+        4,
+        6
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        5,
+        9,
+        10,
+        12,
+        17
+      ],
+      "bonuses": [
+        4,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        14,
+        29,
+        31,
+        33,
+        38
+      ],
+      "bonuses": [
+        2,
+        11
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        2,
+        18,
+        19,
+        45,
+        47
+      ],
+      "bonuses": [
+        7,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        11,
+        12,
+        45,
+        49,
+        50
+      ],
+      "bonuses": [
+        1,
+        3
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        1,
+        2,
+        24,
+        37,
+        38
+      ],
+      "bonuses": [
+        1,
+        2
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        9,
+        14,
+        26,
+        28,
+        29
+      ],
+      "bonuses": [
+        7,
+        11
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        12,
+        13,
+        14,
+        39,
+        47
+      ],
+      "bonuses": [
+        8,
+        12
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        5,
+        40,
+        42,
+        45,
+        47
+      ],
+      "bonuses": [
+        5,
+        11
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        21,
+        22,
+        24,
+        27,
+        42
+      ],
+      "bonuses": [
+        8,
+        11
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        2,
+        4,
+        19,
+        20,
+        33
+      ],
+      "bonuses": [
+        3,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        16,
+        28,
+        29,
+        37,
+        38
+      ],
+      "bonuses": [
+        4,
+        5
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        9,
+        11,
+        21,
+        23,
+        40
+      ],
+      "bonuses": [
+        5,
+        8
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        1,
+        2,
+        4,
+        21,
+        40
+      ],
+      "bonuses": [
+        1,
+        4
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        21,
+        23,
+        31,
+        32,
+        36
+      ],
+      "bonuses": [
+        2,
+        10
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        16,
+        17,
+        38,
+        40,
+        43
+      ],
+      "bonuses": [
+        2,
+        9
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        14,
+        16,
+        27,
+        28,
+        47
+      ],
+      "bonuses": [
+        3,
+        7
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        5,
+        28,
+        31,
+        33,
+        35
+      ],
+      "bonuses": [
+        3,
+        4
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        23,
+        24,
+        28,
+        29,
+        40
+      ],
+      "bonuses": [
+        5,
+        8
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        2,
+        3,
+        9,
+        11,
+        35
+      ],
+      "bonuses": [
+        1,
+        4
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        21,
+        22,
+        24,
+        30,
+        33
+      ],
+      "bonuses": [
+        7,
+        9
+      ],
+      "undrawn": 5,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 2
+    },
+    {
+      "numbers": [
+        6,
+        9,
+        10,
+        33,
+        35
+      ],
+      "bonuses": [
+        4,
+        11
+      ],
+      "undrawn": 4,
+      "total": 5,
+      "holes": 2,
+      "odd": 3,
+      "minDist": 1
+    },
+    {
+      "numbers": [
+        17,
+        23,
+        24,
+        34,
+        36
+      ],
+      "bonuses": [
+        1,
+        4
+      ],
+      "undrawn": 4,
+      "total": 5,
+      "holes": 2,
+      "odd": 2,
+      "minDist": 1
+    },
+    {
+      "numbers": [
+        4,
+        9,
+        11,
+        37,
+        39
+      ],
+      "bonuses": [
+        4,
+        9
+      ],
+      "undrawn": 4,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 1
+    },
+    {
+      "numbers": [
+        3,
+        27,
+        29,
+        37,
+        38
+      ],
+      "bonuses": [
+        6,
+        7
+      ],
+      "undrawn": 4,
+      "total": 5,
+      "holes": 2,
+      "odd": 4,
+      "minDist": 1
     }
   ]
 }
